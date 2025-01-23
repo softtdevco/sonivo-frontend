@@ -16,8 +16,12 @@ import Link from "next/link";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
   return (
     <>
@@ -118,7 +122,7 @@ const Register = () => {
             </label>
             <div className="relative">
               <Input
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 className="mt-1 rounded-xl border border-[#e7e7e7] bg-neutral-50 px-[20.52px] py-5 pl-10 pr-10"
                 placeholder="Enter password"
                 id="confirm-password"
@@ -127,9 +131,9 @@ const Register = () => {
               <button
                 type="button"
                 className="absolute right-4 top-1/2 -translate-y-1/2"
-                onClick={handleShowPassword}
+                onClick={handleShowConfirmPassword}
               >
-                {showPassword ? (
+                {showConfirmPassword ? (
                   <EyeOff className="h-[13px] w-[13px] text-gray-500" />
                 ) : (
                   <Eye className="h-[13px] w-[13px] text-gray-500" />

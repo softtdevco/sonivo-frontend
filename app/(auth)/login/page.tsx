@@ -65,9 +65,9 @@ const Login = () => {
             </div>
           </div>
           <div className="mb-16 mt-10 flex items-center justify-between">
-            <h1 className="text-black text-[15px] font-medium leading-[21px]">
+            <Link className="text-black text-[15px] font-medium leading-[21px]" href="/forgot-password">
               Forgot password?
-            </h1>
+            </Link>
             <Button className="flex w-[150px] items-center justify-between rounded-xl bg-[#131313] px-5 py-3 text-white transition-all duration-200 hover:bg-[#2b2b2b] hover:scale-105">
               Login
               <MoveRight className="h-5 w-5" />
