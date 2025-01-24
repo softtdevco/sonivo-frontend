@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { OTPInput } from '@/components/shared/otp-input'
 import { useRouter } from 'next/navigation'
 
