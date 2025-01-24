@@ -1,6 +1,6 @@
 "use client";
+import { Logo } from "@/assets/images";
 import Image from "next/image";
-import Logo from "@/public/Sonivo.svg";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (

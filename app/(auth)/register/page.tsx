@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
 import {
   CircleUserRound,
   Eye,
@@ -13,160 +12,275 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/lib/validations/auth";
+import type { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+
+// Constants
+const INPUT_BASE_CLASSES = "-mt-1 rounded-xl border bg-neutral-50 px-[20.52px] py-5 pl-10";
+const ICON_BASE_CLASSES = "absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2";
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
+
+interface FormFieldWrapperProps {
+  label: string;
+  error?: boolean;
+  children: React.ReactNode;
+}
+
+const FormFieldWrapper = ({ label, error, children }: FormFieldWrapperProps) => (
+  <FormItem>
+    <FormLabel
+      className={`text-base font-normal leading-tight ${
+        error ? "text-red-500" : "text-[#272728]"
+      }`}
+    >
+      {label}
+    </FormLabel>
+    <FormControl>{children}</FormControl>
+    <FormMessage className="text-red-500" />
+  </FormItem>
+);
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
+
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+    },
+  });
+
+  const onSubmit = async (data: RegisterFormValues) => {
+    try {
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const handleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+
+  const getInputClassName = (error?: boolean) => `
+    ${INPUT_BASE_CLASSES} ${
+    error
+      ? "border-red-500 text-red-500 focus-visible:ring-red-500"
+      : "border-[#e7e7e7]"
+  }`;
+
+  const getIconClassName = (error?: boolean) => `
+    ${ICON_BASE_CLASSES} ${error ? "text-red-500" : "text-gray-500"}`;
+
   return (
     <>
-    
-          <div className="mb-10">
-            <h1 className="text-2xl font-semibold leading-tight text-[#272728]">
-              Start your free trial
-            </h1>
-            <p className="mt-2 text-base font-normal leading-tight text-[#575758]">
-              Get started with a demo account on Sonivo
-            </p>
-          </div>
-          <div>
-            <label
-              htmlFor="name"
-              className="text-base font-normal leading-tight text-[#272728]"
-            >
-              Your name
-            </label>
-            <div className="relative">
-              <Input
-                className="mt-1 rounded-xl border border-[#e7e7e7] bg-neutral-50 px-[20.52px] py-5 pl-10"
-                placeholder="Enter your name"
-                id="name"
-                type="text"
-              />
-              <CircleUserRound className="absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2 text-gray-500" />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="phone-number"
-              className="text-base font-normal leading-tight text-[#272728]"
-            >
-              Phone number (optional)
-            </label>
-            <div className="relative">
-              <Input
-                id="phone-number"
-                type="tel"
-                className="mt-1 rounded-xl border border-[#e7e7e7] bg-neutral-50 px-[20.52px] py-5 pl-10 pr-10"
-                placeholder="Enter phone number"
-              />
-              <PhoneIncoming className="absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2 text-gray-500" />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="email"
-              className="text-base font-normal leading-tight text-[#272728]"
-            >
-              Email
-            </label>
-            <div className="relative">
-              <Input
-                className="mt-1 rounded-xl border border-[#e7e7e7] bg-neutral-50 px-[20.52px] py-5 pl-10"
-                placeholder="Enter email"
-                type="email"
-                id="email"
-              />
-              <Mail className="absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2 text-gray-500" />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="password"
-              className="text-base font-normal leading-tight text-[#272728]"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <Input
-                type={showPassword ? "text" : "password"}
-                className="mt-1 rounded-xl border border-[#e7e7e7] bg-neutral-50 px-[20.52px] py-5 pl-10 pr-10"
-                placeholder="Enter password"
-                id="password"
-              />
-              <LockKeyhole className="absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2 text-gray-500" />
-              <button
-                type="button"
-                className="absolute right-4 top-1/2 -translate-y-1/2"
-                onClick={handleShowPassword}
+      <div className="mb-10">
+        <h1 className="text-2xl font-semibold leading-tight text-[#272728]">
+          Start your free trial
+        </h1>
+        <p className="mt-2 text-base font-normal leading-tight text-[#575758]">
+          Get started with a demo account on Sonivo
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormFieldWrapper
+                label="Your name"
+                error={!!form.formState.errors.name}
               >
-                {showPassword ? (
-                  <EyeOff className="h-[13px] w-[13px] text-gray-500" />
-                ) : (
-                  <Eye className="h-[13px] w-[13px] text-gray-500" />
-                )}
-              </button>
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="confirm-password"
-              className="text-base font-normal leading-tight text-[#272728]"
-            >
-              Confirm password
-            </label>
-            <div className="relative">
-              <Input
-                type={showConfirmPassword ? "text" : "password"}
-                className="mt-1 rounded-xl border border-[#e7e7e7] bg-neutral-50 px-[20.52px] py-5 pl-10 pr-10"
-                placeholder="Enter password"
-                id="confirm-password"
-              />
-              <LockKeyhole className="absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2 text-gray-500" />
-              <button
-                type="button"
-                className="absolute right-4 top-1/2 -translate-y-1/2"
-                onClick={handleShowConfirmPassword}
+                <div className="relative">
+                  <Input
+                    {...field}
+                    className={getInputClassName(!!form.formState.errors.name)}
+                    placeholder="Enter your name"
+                  />
+                  <CircleUserRound
+                    className={getIconClassName(!!form.formState.errors.name)}
+                  />
+                </div>
+              </FormFieldWrapper>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormFieldWrapper
+                label="Phone number (optional)"
+                error={!!form.formState.errors.phone}
               >
-                {showConfirmPassword ? (
-                  <EyeOff className="h-[13px] w-[13px] text-gray-500" />
-                ) : (
-                  <Eye className="h-[13px] w-[13px] text-gray-500" />
-                )}
-              </button>
-            </div>
-          </div>
-          <div className="items-top mt-10 flex space-x-4 items-center">
-            <Checkbox id="terms1"  />
-            <p className="text-black text-[15px] font-medium leading-[21px]">
-              By clicking here, you are accepting our Privacy policy, Terms &
-              Conditions
-            </p>
-          </div>
-         
-         
-          <div className="mb-16 mt-10 flex items-center justify-end">
-            
-            <Button className="flex w-[170px] items-center justify-between rounded-xl bg-[#131313] px-5 py-3 text-white transition-all duration-200 hover:bg-[#2b2b2b] hover:scale-105">
+                <div className="relative">
+                  <Input
+                    {...field}
+                    className={getInputClassName(!!form.formState.errors.phone)}
+                    placeholder="Enter phone number"
+                  />
+                  <PhoneIncoming
+                    className={getIconClassName(!!form.formState.errors.phone)}
+                  />
+                </div>
+              </FormFieldWrapper>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormFieldWrapper
+                label="Email"
+                error={!!form.formState.errors.email}
+              >
+                <div className="relative">
+                  <Input
+                    {...field}
+                    type="email"
+                    className={getInputClassName(!!form.formState.errors.email)}
+                    placeholder="Enter email"
+                  />
+                  <Mail
+                    className={getIconClassName(!!form.formState.errors.email)}
+                  />
+                </div>
+              </FormFieldWrapper>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormFieldWrapper
+                label="Password"
+                error={!!form.formState.errors.password}
+              >
+                <div className="relative">
+                  <Input
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    className={`${getInputClassName(!!form.formState.errors.password)} pr-10`}
+                    placeholder="Enter password"
+                  />
+                  <LockKeyhole
+                    className={getIconClassName(!!form.formState.errors.password)}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-[13px] w-[13px] text-gray-500" />
+                    ) : (
+                      <Eye className="h-[13px] w-[13px] text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </FormFieldWrapper>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormFieldWrapper
+                label="Confirm Password"
+                error={!!form.formState.errors.confirmPassword}
+              >
+                <div className="relative">
+                  <Input
+                    {...field}
+                    type={showConfirmPassword ? "text" : "password"}
+                    className={`${getInputClassName(!!form.formState.errors.confirmPassword)} pr-10`}
+                    placeholder="Confirm password"
+                  />
+                  <LockKeyhole
+                    className={getIconClassName(!!form.formState.errors.confirmPassword)}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2"
+                    onClick={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-[13px] w-[13px] text-gray-500" />
+                    ) : (
+                      <Eye className="h-[13px] w-[13px] text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </FormFieldWrapper>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="terms"
+            render={({ field }) => (
+              <>
+                <FormItem className="mt-6 flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel className="text-black text-[15px] font-medium leading-[21px]">
+                      By clicking here, you are accepting our Privacy policy,
+                      Terms & Conditions
+                    </FormLabel>
+                  </div>
+                </FormItem>
+                <FormMessage className="text-red-500" />
+              </>
+            )}
+          />
+
+          <div className="flex items-center justify-end pt-6">
+            <Button
+              type="submit"
+              className="flex w-[170px] items-center justify-between rounded-xl bg-[#131313] px-5 py-3 text-white transition-all duration-200 hover:scale-105 hover:bg-[#2b2b2b]"
+            >
               Create Account
               <MoveRight className="h-5 w-5" />
             </Button>
           </div>
-          <p className="text-black text-center text-[15px] font-medium leading-[21px]">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="text-black text-[15px] font-bold leading-[21px] "
-            >
-              Sign in
-            </Link>
-          </p>
-        
+        </form>
+      </Form>
+
+      <p className="mt-16 text-center text-[15px] font-medium leading-[21px] text-black">
+        Already have an account?{" "}
+        <Link
+          href="/login"
+          className="text-[15px] font-bold leading-[21px] text-black"
+        >
+          Sign in
+        </Link>
+      </p>
     </>
   );
 };
