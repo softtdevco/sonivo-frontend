@@ -1,5 +1,5 @@
 "use client"
-import { OTPInput } from '@/components/otp-input'
+import { OTPInput } from '@/components/shared/otp-input'
 import { useRouter } from 'next/navigation'
 
 
