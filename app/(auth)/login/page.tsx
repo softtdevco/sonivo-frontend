@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Eye, EyeOff, LockKeyhole, Mail, MoveRight } from "lucide-react";
+import { Eye, EyeOff, Loader2, LockKeyhole, Mail, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,11 +16,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { useLoginMutation } from "@/service/auth/auth";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { handleEncodeData } from "@/lib/utils";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const {mutate: login, isPending} = useLoginMutation()
+  const router = useRouter()
   
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -30,12 +36,20 @@ const Login = () => {
     },
   });
 
+
   const onSubmit = async (data: LoginFormValues) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
+    login(data, {
+      onSuccess: (response) => {
+        if (response.user) {
+          toast.success("Login successful")
+          handleEncodeData(response)
+          router.push('/dashboard')
+        }
+      },
+      onError: (error) => {
+        toast.error(error.response?.data?.message || "Failed to login")
+      }
+    })
   };
 
   // Extract common styles to constants
@@ -118,9 +132,11 @@ const Login = () => {
             <Button
               type="submit"
               className="flex w-[150px] items-center justify-between rounded-xl bg-[#131313] px-5 py-3 text-white transition-all duration-200 hover:bg-[#2b2b2b] hover:scale-105"
+              disabled={isPending}
             >
+              {isPending && <Loader2 className="h-5 w-5 animate-spin" />}
               Login
-              <MoveRight className="h-5 w-5" />
+              {!isPending && <MoveRight className="h-5 w-5" />}
             </Button>
           </div>
         </form>

@@ -4,6 +4,7 @@ import {
   CircleUserRound,
   Eye,
   EyeOff,
+  Loader2,
   LockKeyhole,
   Mail,
   MoveRight,
@@ -14,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/lib/validations/auth";
-import type { z } from "zod";
 import {
   Form,
   FormControl,
@@ -25,12 +25,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { RegisterFormValues, useSignUpMutation } from "@/service/auth/auth";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { ErrorResponse } from "@/service/auth/authServices";
+
 
 // Constants
 const INPUT_BASE_CLASSES = "-mt-1 rounded-xl border bg-neutral-50 px-[20.52px] py-5 pl-10";
 const ICON_BASE_CLASSES = "absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2";
-
-type RegisterFormValues = z.infer<typeof registerSchema>;
 
 interface FormFieldWrapperProps {
   label: string;
@@ -38,7 +41,7 @@ interface FormFieldWrapperProps {
   children: React.ReactNode;
 }
 
-const FormFieldWrapper = ({ label, error, children }: FormFieldWrapperProps) => (
+export const FormFieldWrapper = ({ label, error, children }: FormFieldWrapperProps) => (
   <FormItem>
     <FormLabel
       className={`text-base font-normal leading-tight ${
@@ -55,11 +58,13 @@ const FormFieldWrapper = ({ label, error, children }: FormFieldWrapperProps) => 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const { mutate: register, isPending } = useSignUpMutation();
+  const router = useRouter();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
+      fullName: "",
       email: "",
       phone: "",
       password: "",
@@ -69,11 +74,29 @@ const Register = () => {
   });
 
   const onSubmit = async (data: RegisterFormValues) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
+      // Omit terms and confirmPassword when sending to API
+      const apiData: Omit<RegisterFormValues, 'terms' | 'confirmPassword'> = {
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+      };
+      register(apiData, {
+        onSuccess: (response) => {
+          const userData = btoa(JSON.stringify({
+            email: data.email,
+            fullName: data.fullName,
+            password: data.password,
+            phone: data.phone,
+          }));
+          
+          router.push(`/verify-email?token=${encodeURIComponent(response.token)}&data=${userData}`);
+          toast.success("Account created successfully");
+        },
+        onError: (error: ErrorResponse) => {
+          toast.error(error.response?.data?.message || "An error occurred");
+        }
+      });
   };
 
   const getInputClassName = (error?: boolean) => `
@@ -101,20 +124,20 @@ const Register = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="name"
+            name="fullName"
             render={({ field }) => (
               <FormFieldWrapper
                 label="Your name"
-                error={!!form.formState.errors.name}
+                error={!!form.formState.errors.fullName}
               >
                 <div className="relative">
                   <Input
                     {...field}
-                    className={getInputClassName(!!form.formState.errors.name)}
+                    className={getInputClassName(!!form.formState.errors.fullName)}
                     placeholder="Enter your name"
                   />
                   <CircleUserRound
-                    className={getIconClassName(!!form.formState.errors.name)}
+                    className={getIconClassName(!!form.formState.errors.fullName)}
                   />
                 </div>
               </FormFieldWrapper>
@@ -264,9 +287,11 @@ const Register = () => {
             <Button
               type="submit"
               className="flex w-[170px] items-center justify-between rounded-xl bg-[#131313] px-5 py-3 text-white transition-all duration-200 hover:scale-105 hover:bg-[#2b2b2b]"
+              disabled={isPending}
             >
+              {isPending && <Loader2 className="animate-spin" />}
               Create Account
-              <MoveRight className="h-5 w-5" />
+              {!isPending && <MoveRight className="h-5 w-5" />}
             </Button>
           </div>
         </form>
