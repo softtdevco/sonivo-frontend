@@ -1,11 +1,12 @@
 "use client"
+import { Suspense } from 'react'
 import { OTPInput } from '@/components/shared/otp-input'
 import { useSignUpMutation, useVerifyEmailMutation } from '@/service/auth/auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-const VerifyEmail = () => {
+const VerifyEmailContent = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [countdown, setCountdown] = useState(59)
@@ -83,6 +84,14 @@ const VerifyEmail = () => {
       canResend={canResend}
       isLoading={isPending}
     />
+  )
+}
+
+const VerifyEmail = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
   )
 }
 
