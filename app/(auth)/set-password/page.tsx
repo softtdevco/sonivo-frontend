@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useSetPasswordMutation } from "@/service/auth/auth";
-import { FormFieldWrapper } from "../register/page";
+import { FormFieldWrapper } from "../register/components/form-field-wrapper";
 
 type SetPasswordFormValues = z.infer<typeof setPasswordSchema>;
 
