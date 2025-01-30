@@ -90,10 +90,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={pathname === item.url}>
-                      <a href={item.url}>
-                        {item.icon && <span className="">{item.icon}</span>}
+                  <SidebarMenuItem 
+                    key={item.title}
+                    className={pathname === item.url ? "bg-[#f3f4f6] rounded-md" : ""}
+                  >
+                    <SidebarMenuButton asChild>
+                      <a href={item.url} className="flex items-center gap-2">
+                        {item.icon && <span>{item.icon}</span>}
                         {item.title}
                       </a>
                     </SidebarMenuButton>
