@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from 'react';
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, LockKeyhole, MoveRight, Loader2 } from "lucide-react";
 import React, { useState } from "react";
@@ -19,7 +20,7 @@ import { FormFieldWrapper } from "../register/components/form-field-wrapper";
 
 type SetPasswordFormValues = z.infer<typeof setPasswordSchema>;
 
-const SetPassword = () => {
+const SetPasswordContent = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const { mutate: setPassword, isPending } = useSetPasswordMutation();
@@ -178,6 +179,14 @@ const SetPassword = () => {
         </form>
       </Form>
     </>
+  );
+};
+
+const SetPassword = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SetPasswordContent />
+    </Suspense>
   );
 };
 

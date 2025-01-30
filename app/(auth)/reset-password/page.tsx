@@ -1,11 +1,12 @@
 "use client";
+import { Suspense } from 'react';
 import { OTPInput } from '@/components/shared/otp-input'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useForgotPasswordMutation, useVerifyResetPasswordMutation } from '@/service/auth/auth'
 
-const ResetPassword = () => {
+const ResetPasswordContent = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [countdown, setCountdown] = useState(59)
@@ -86,4 +87,12 @@ const ResetPassword = () => {
   )
 }
 
-export default ResetPassword
+const ResetPassword = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+};
+
+export default ResetPassword;
