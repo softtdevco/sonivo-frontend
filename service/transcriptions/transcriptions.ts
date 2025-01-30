@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createTranscription, getUserTranscriptions, getTranscription, deleteTranscription } from "./transcriptionsService";
+import { createTranscription, getUserTranscriptions, getTranscription, deleteTranscription, getTranscriptionSummary, getTranscriptionInsight } from "./transcriptionsService";
 import { FileItem } from "@/app/dashboard/components/uploadsList";
 import type { Transcription } from "@/app/transcriptions/[id]/page";
+import { UseQueryOptions } from "@tanstack/react-query";
 
 export function useGetUserTranscriptions() {
     return useQuery<FileItem[]>({
@@ -38,5 +39,39 @@ export function useDeleteTranscription(options?: { onSuccess?: () => void }) {
             options?.onSuccess?.();
         }
     });
+}
+
+interface SummaryResponse {
+    transctriptionSummary: string;
+    createdAt: string;
+    duration: string;
+}
+
+export function useGetTranscriptionSummary(
+  id: string, 
+  options?: Omit<UseQueryOptions<SummaryResponse>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: ['transcription-summary', id],
+    queryFn: () => getTranscriptionSummary(id),
+    ...options
+  });
+}
+
+interface InsightResponse {
+ transcriptionInsight: string;
+ createdAt: string;
+ duration: string;
+}
+
+export function useGetTranscriptionInsight(
+  id: string, 
+  options?: Omit<UseQueryOptions<InsightResponse>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: ['transcription-insight', id],
+    queryFn: () => getTranscriptionInsight(id),
+    ...options
+  });
 }
 

@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import WaveSurfer from "wavesurfer.js";
+import React, { useMemo, useCallback, useRef } from "react";
+import { useWavesurfer } from '@wavesurfer/react';
+import Timeline from 'wavesurfer.js/dist/plugins/timeline.esm.js';
 import { FaPlay, FaPause, FaForward, FaBackward } from "react-icons/fa6";
 import { IoMdVolumeHigh, IoMdVolumeOff } from "react-icons/io";
 
@@ -10,114 +11,74 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer = ({ audioUrl, onTimeUpdate }: AudioPlayerProps) => {
-  const waveformRef = useRef(null);
-  const wavesurfer = useRef<WaveSurfer | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const containerRef = useRef(null);
+  const [playbackRate, setPlaybackRate] = React.useState(1);
+  const [isMuted, setIsMuted] = React.useState(false);
 
-  useEffect(() => {
-    if (!waveformRef.current) return;
+  // Add effect to initialize waveform
+ 
 
-    // Cleanup previous instance
-    if (wavesurfer.current) {
-      wavesurfer.current.destroy();
+  const { wavesurfer, isPlaying, currentTime } = useWavesurfer({
+    container: containerRef,
+    height: 100,
+    waveColor: '#4d4d4d',
+    progressColor: '#ef5a3c',
+    cursorColor: '#1c2833',
+    url: audioUrl,
+    normalize: true,
+    minPxPerSec: 1,
+    plugins: useMemo(() => [Timeline.create()], []),
+    fillParent: true,
+    autoScroll: false,
+    barWidth: 4,
+    barGap: 2,
+    peaks: undefined,
+    duration: undefined,
+    mediaControls: false,
+    interact: false,
+    hideScrollbar: true,
+    cursorWidth: 2,
+  });
+
+  
+
+  const onPlayPause = useCallback(() => {
+    wavesurfer?.playPause();
+  }, [wavesurfer]);
+
+  const handleMute = useCallback(() => {
+    if (wavesurfer) {
+      const newMutedState = !isMuted;
+      wavesurfer.setMuted(newMutedState);
+      setIsMuted(newMutedState);
     }
+  }, [wavesurfer, isMuted]);
 
-    setIsLoading(true);
-
-    const ws = WaveSurfer.create({
-      container: waveformRef.current,
-      waveColor: '#4d4d4d',
-      progressColor: '#ef5a3c',
-      cursorColor: '#1c2833',
-      barWidth: 2,
-      barRadius: 3,
-      cursorWidth: 1,
-      height: 100,
-      barGap: 3,
-      normalize: true,
-      fillParent: true,
-      
-    });
-
-    ws.on('ready', () => {
-      setIsLoading(false);
-      wavesurfer.current = ws;
-    });
-
-    ws.on('error', (error) => {
-      console.error('WaveSurfer error:', error);
-      setIsLoading(false);
-    });
-
-    ws.on('play', () => setIsPlaying(true));
-    ws.on('pause', () => setIsPlaying(false));
-    ws.on('audioprocess', (time: number) => {
-      onTimeUpdate?.(time);
-    });
-
-    try {
-      ws.load(audioUrl);
-    } catch (error) {
-      console.error('Error loading audio:', error);
-      setIsLoading(false);
-    }
-
-    return () => {
-      if (ws) {
-        ws.destroy();
-      }
-    };
-  }, [audioUrl, onTimeUpdate]);
-
-  const handlePlayPause = () => {
-    if (wavesurfer.current) {
-      wavesurfer.current.playPause();
-    }
-  };
-
-  const handleMute = () => {
-    if (wavesurfer.current) {
-      wavesurfer.current.setMuted(!isMuted);
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const handlePlaybackRate = (rate: number) => {
-    if (wavesurfer.current) {
-      wavesurfer.current.setPlaybackRate(rate);
+  const handlePlaybackRate = useCallback((rate: number) => {
+    if (wavesurfer) {
+      wavesurfer.setPlaybackRate(rate);
       setPlaybackRate(rate);
     }
-  };
+  }, [wavesurfer]);
 
-  const handleForward = () => {
-    if (wavesurfer.current) {
-      const currentTime = wavesurfer.current.getCurrentTime();
-      wavesurfer.current.seekTo((currentTime + 10) / wavesurfer.current.getDuration());
+  React.useEffect(() => {
+    if (onTimeUpdate) {
+      onTimeUpdate(currentTime);
     }
-  };
-
-  const handleBackward = () => {
-    if (wavesurfer.current) {
-      const currentTime = wavesurfer.current.getCurrentTime();
-      wavesurfer.current.seekTo(Math.max(0, (currentTime - 10)) / wavesurfer.current.getDuration());
-    }
-  };
+  }, [currentTime, onTimeUpdate]);
 
   return (
-    <div className="mt-8">
-      <div ref={waveformRef} className="w-full rounded-lg p-4" />
+    <div className="mt-8 border-b pb-4">
+      <div 
+        ref={containerRef} 
+        className="w-full h-[100px] rounded-lg p-4 overflow-hidden"
+      />
       
-      {/* Audio Controls */}
       <div className="flex items-center justify-center gap-6 mt-4">
-        {/* Playback Speed */}
         <select 
           value={playbackRate}
           onChange={(e) => handlePlaybackRate(Number(e.target.value))}
           className="p-2 rounded-md border border-[#dedede] text-[#1c2833] outline-none"
-          disabled={isLoading}
         >
           <option value={0.5}>0.5x</option>
           <option value={1}>1x</option>
@@ -125,20 +86,16 @@ const AudioPlayer = ({ audioUrl, onTimeUpdate }: AudioPlayerProps) => {
           <option value={2}>2x</option>
         </select>
 
-        {/* Backward 10s */}
         <button 
-          onClick={handleBackward}
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50"
-          disabled={isLoading}
+          onClick={() => wavesurfer?.skip(-10)}
+          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
           <FaBackward className="size-5 text-[#1c2833]" />
         </button>
 
-        {/* Play/Pause */}
         <button 
-          onClick={handlePlayPause}
-          className="p-3 rounded-full bg-[#ef5a3c] hover:bg-[#ef5a3c]/80 transition-colors disabled:opacity-50"
-          disabled={isLoading}
+          onClick={onPlayPause}
+          className="p-3 rounded-full bg-[#ef5a3c] hover:bg-[#ef5a3c]/80 transition-colors"
         >
           {isPlaying ? (
             <FaPause className="size-5 text-white" />
@@ -147,20 +104,16 @@ const AudioPlayer = ({ audioUrl, onTimeUpdate }: AudioPlayerProps) => {
           )}
         </button>
 
-        {/* Forward 10s */}
         <button 
-          onClick={handleForward}
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50"
-          disabled={isLoading}
+          onClick={() => wavesurfer?.skip(10)}
+          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
           <FaForward className="size-5 text-[#1c2833]" />
         </button>
 
-        {/* Mute */}
         <button 
           onClick={handleMute}
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50"
-          disabled={isLoading}
+          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
           {isMuted ? (
             <IoMdVolumeOff className="size-5 text-[#1c2833]" />

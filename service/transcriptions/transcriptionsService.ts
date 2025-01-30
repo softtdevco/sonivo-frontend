@@ -38,3 +38,24 @@ export const deleteTranscription = async (id: string) => {
         throw error as ErrorResponse;
     }
 };
+
+export const getTranscriptionSummary = async (id: string) => {
+    try {
+        const response = await api.get(`/transcriptions/${id}/summary`);
+        return response.data;
+    } catch (error) {
+        throw error as ErrorResponse;
+    }
+ 
+
+};
+
+export const getTranscriptionInsight = async (id: string) => {
+    try {
+        const response = await api.get(`/transcriptions/${id}/insight`);
+        return response.data;
+    } catch (error) {
+        throw error as ErrorResponse;
+    }
+};
+

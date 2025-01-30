@@ -93,7 +93,7 @@ const UploadsList = () => {
         {isPending ? (
           <div className="flex justify-center items-center w-full h-full">
              <SyncLoader
-          color="green"
+          color="#ef5a3c"
           loading={true} 
           size={10}
           aria-label="Loading Spinner"

@@ -38,7 +38,7 @@ const Page = () => {
   if (isLoading || !transcription?.transcription) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <SyncLoader color="green" size={10} />
+        <SyncLoader color="#ef5a3c" size={10} />
       </div>
     );
   }
@@ -48,7 +48,7 @@ const Page = () => {
     return (
       <div className="flex h-screen items-center justify-center flex-col gap-4">
         <p className="text-gray-500">Transcription in progress...</p>
-        <SyncLoader color="green" size={10} />
+        <SyncLoader color="#ef5a3c" size={10} />
       </div>
     );
   }
