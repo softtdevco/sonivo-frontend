@@ -29,31 +29,12 @@ import { RegisterFormValues, useSignUpMutation } from "@/service/auth/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { ErrorResponse } from "@/service/auth/authServices";
+import { FormFieldWrapper } from "./components/form-field-wrapper";
 
 
 // Constants
 const INPUT_BASE_CLASSES = "-mt-1 rounded-xl border bg-neutral-50 px-[20.52px] py-5 pl-10";
 const ICON_BASE_CLASSES = "absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2";
-
-interface FormFieldWrapperProps {
-  label: string;
-  error?: boolean;
-  children: React.ReactNode;
-}
-
-export const FormFieldWrapper = ({ label, error, children }: FormFieldWrapperProps) => (
-  <FormItem>
-    <FormLabel
-      className={`text-base font-normal leading-tight ${
-        error ? "text-red-500" : "text-[#272728]"
-      }`}
-    >
-      {label}
-    </FormLabel>
-    <FormControl>{children}</FormControl>
-    <FormMessage className="text-red-500" />
-  </FormItem>
-);
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
