@@ -13,7 +13,13 @@ import {
 import { FaCircleUser } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
 
-const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
+const DashboardWrapper = ({ 
+  children,
+  header 
+}: { 
+  children: React.ReactNode;
+  header: React.ReactNode;
+}) => {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -22,11 +28,7 @@ const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
           <SidebarTrigger className="-ml-1 md:hidden" />
           <Separator orientation="vertical" className="mr-2 h-4" />
           <Breadcrumb className="flex w-full items-center justify-between">
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden text-[21.30px] font-normal leading-relaxed text-[#1c2833] md:block">
-                👋🏻 Welcome back
-              </BreadcrumbItem>
-            </BreadcrumbList>
+            {header}
             <BreadcrumbList>
               <BreadcrumbItem className=" ">
                 <FaCircleUser className="size-5 mr-4" />

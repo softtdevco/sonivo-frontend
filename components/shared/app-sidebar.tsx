@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import {
   Sidebar,
@@ -20,6 +22,7 @@ import {
   NotepadText,
   PhoneCall,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const data = {
   navMain: [
@@ -29,24 +32,23 @@ const data = {
       items: [
         {
           title: "Dashboard",
-          url: "#",
+          url: "/dashboard",
           icon: <LayoutDashboard className="size-5" />,
         },
       ],
     },
     {
       title: "Menu",
-      url: "#",
+      url: "#", 
       items: [
         {
           title: "Live Calls",
-          url: "#",
+          url: "/live-calls",
           icon: <PhoneCall className="size-5" />,
         },
         {
           title: "Transcriptions",
-          url: "#",
-          isActive: true,
+          url: "/transcriptions",
           icon: <NotepadText />,
         },
       ],
@@ -56,13 +58,13 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Account Settings",
-          url: "#",
+          title: "Account Settings", 
+          url: "/settings",
           icon: <CircleUser className="size-5" />,
         },
         {
           title: "Support",
-          url: "#",
+          url: "/support",
           icon: <Headphones className="size-5" />,
         },
       ],
@@ -71,6 +73,8 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -87,7 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
+                    <SidebarMenuButton asChild isActive={pathname === item.url}>
                       <a href={item.url}>
                         {item.icon && <span className="">{item.icon}</span>}
                         {item.title}

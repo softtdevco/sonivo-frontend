@@ -12,10 +12,12 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const codedToken = localStorage.getItem("access_token");
+  const token = codedToken ? atob(codedToken) : null;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log(token);
   } else {
     // Remove Authorization header if token is not present
     delete config.headers.Authorization;

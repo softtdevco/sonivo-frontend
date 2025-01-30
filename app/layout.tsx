@@ -6,12 +6,12 @@ import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
-  title: "Sonivo",
+  title: "TransKript",
   description: "",
 };
 
@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
+    <html lang="en" className={inter.className}>
+      <body className={`${inter.className} antialiased`}>
         <QueryProvider>
           <main>{children}</main>
         </QueryProvider>
