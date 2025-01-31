@@ -113,7 +113,7 @@ const Login = () => {
           Sign in
         </h1>
         <p className="mt-2 text-base font-normal leading-tight text-[#575758]">
-          Log into your Sonivo account
+          Log into your Transkript account
         </p>
       </div>
 

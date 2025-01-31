@@ -30,9 +30,19 @@ const Page = () => {
   const { id } = useParams();
   const [currentTime, setCurrentTime] = useState(0);
   const { data: transcription, isLoading } = useGetTranscription(id as string, {
-    refetchInterval: (query) => 
-      query.state.data?.transcriptionStatus === "PROCESSING" ? 3000 : false,
-  });
+    refetchInterval: (query) => {
+      if (query.state.data?.transcriptionStatus === "PROCESSING") {
+        console.log("Refetching..."); // Debug log
+        return 3000;
+      }
+      return false;
+    },
+    refetchIntervalInBackground: true,
+    enabled: !!id
+  }) as { 
+    data: Transcription | undefined; 
+    isLoading: boolean 
+  };
 
   // Return loading state if either loading or no transcription data yet
   if (isLoading || !transcription?.transcription) {
