@@ -1,4 +1,4 @@
-import Logo from "./Sonivo.svg"
+import Logo from "./Transkript.svg"
 
 
 export { Logo };
