@@ -9,7 +9,7 @@ const inter = Inter({
   display: "swap",
   preload: true,
 });
-
+//j
 export const metadata: Metadata = {
   title: "TransKript",
   description: "",
