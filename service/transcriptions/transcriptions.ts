@@ -21,7 +21,7 @@ export function useCreateTranscription() {
     });
 }
 
-export function useGetTranscription(id: string, options?: { refetchInterval?: (query: { state: { data: Transcription | undefined } }) => number | false }) {
+export function useGetTranscription(id: string, options?: Omit<UseQueryOptions<Transcription>, 'queryKey' | 'queryFn'>) {
   return useQuery<Transcription>({
     queryKey: ['transcription', id],
     queryFn: () => getTranscription(id),

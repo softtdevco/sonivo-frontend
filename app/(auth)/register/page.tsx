@@ -97,7 +97,7 @@ const Register = () => {
           Start your free trial
         </h1>
         <p className="mt-2 text-base font-normal leading-tight text-[#575758]">
-          Get started with a demo account on Sonivo
+          Get started with a demo account on Transkript
         </p>
       </div>
 
