@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import { ErrorResponse, forgotPassword, login, setPassword, signUp, verifyEmail, verifyResetPassword } from "./authServices";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ErrorResponse, forgotPassword, getUser, login, setPassword, signUp, verifyEmail, verifyResetPassword } from "./authServices";
 import { forgotPasswordSchema, loginSchema, registerSchema, resetPasswordSchema, verifyEmailSchema } from "@/lib/validations/auth";
 import * as z from "zod";
 
@@ -103,6 +103,13 @@ export function useSetPasswordMutation() {
     onSuccess: (response) => {
       return response;
     }
+  });
+}
+
+export function useGetUser() {
+  return useQuery< ErrorResponse>({
+      queryKey: ['user'],
+      queryFn: () => getUser()
   });
 }
 

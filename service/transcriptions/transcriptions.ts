@@ -4,10 +4,10 @@ import { FileItem } from "@/app/dashboard/components/uploadsList";
 import type { Transcription } from "@/app/transcriptions/[id]/page";
 import { UseQueryOptions } from "@tanstack/react-query";
 
-export function useGetUserTranscriptions() {
-    return useQuery<FileItem[]>({
-        queryKey: ['transcriptions'],
-        queryFn: () => getUserTranscriptions()
+export function useGetUserTranscriptions(page: number = 1) {
+    return useQuery<FileItem>({
+        queryKey: ['transcriptions', page],
+        queryFn: () => getUserTranscriptions(page)
     });
 }
 

@@ -1,10 +1,10 @@
 import api from "../api";
 import { ErrorResponse } from "../auth/authServices";
 
-export const getUserTranscriptions = async () => {
+export const getUserTranscriptions = async (page: number = 1) => {
     try {
-        const response = await api.get("/transcriptions");
-        return response.data.data;
+        const response = await api.get(`/transcriptions?page=${page}`);
+        return response.data;
     } catch (error) {
         throw error as ErrorResponse;
     }
