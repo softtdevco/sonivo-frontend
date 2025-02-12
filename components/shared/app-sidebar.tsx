@@ -77,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="bg-white">
         <Image src={Logo} alt="logo" width={100} height={100} />
       </SidebarHeader>
       <SidebarContent>

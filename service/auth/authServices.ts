@@ -62,3 +62,11 @@ export const setPassword = async (data: {resetPasswordToken: string, password: s
   }
 }
 
+export const getUser = async () => {
+  try {
+    const response = await api.get("/auth/me");
+    return response.data;
+  } catch (error) {
+    throw error as ErrorResponse;
+  }
+}
