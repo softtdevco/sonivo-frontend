@@ -16,10 +16,11 @@ import { Loader2 } from "lucide-react";
 import { useUpdateUser } from "@/service/auth/auth";
 import { toast } from "react-toastify";
 import ArrorTopRight from "@/assets/icons/ArrorTopRight";
-
+import { useGetUserSubscription } from "@/service/subscriptions/subscription";
 const Profile = () => {
   const { user } = useUserContext();
   const { mutate: updateUser, isPending } = useUpdateUser();
+  const { data: subscription } = useGetUserSubscription();
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -99,7 +100,7 @@ const Profile = () => {
               Current plan:
             </div>
             <div className="font-['Inter'] text-base font-medium leading-tight text-[#272728]">
-              Free
+              {subscription?.active ? "Paid" : "Free"}
             </div>
           </div>
           <div className="inline-flex items-center justify-start">
