@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/utils/QueryProvider";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "@/app/contexts/userContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body className={`${inter.className} antialiased`}>
         <QueryProvider>
-          <main>{children}</main>
+          <UserProvider>
+            <main>{children}</main>
+          </UserProvider>
         </QueryProvider>
         <ToastContainer />
       </body>

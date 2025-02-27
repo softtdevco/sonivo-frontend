@@ -6,6 +6,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import Billing from "./Billing"
+import Profile from "./Profile"
 export function TabsDemo() {
   return (
     <Tabs defaultValue="billing" className="w-full">
@@ -19,7 +20,7 @@ export function TabsDemo() {
         <TabsTrigger value="credits">Credits</TabsTrigger>
       </TabsList>
       <TabsContent value="profile">
-        <h1>Profile</h1>
+        <Profile />
       </TabsContent>
       <TabsContent value="preferences">
         <h1>Preferences</h1>

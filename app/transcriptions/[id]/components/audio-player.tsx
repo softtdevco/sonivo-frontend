@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useCallback, useRef } from "react";
+import React, { useMemo, useCallback, useRef, useEffect } from "react";
 import { useWavesurfer } from '@wavesurfer/react';
 import Timeline from 'wavesurfer.js/dist/plugins/timeline.esm.js';
 import { FaPlay, FaPause, FaForward, FaBackward } from "react-icons/fa6";
