@@ -1,4 +1,5 @@
 import api from "../api";
+import { UpdateUserData } from "./auth";
 
 export type ErrorResponse = {
   response: {
@@ -65,6 +66,15 @@ export const setPassword = async (data: {resetPasswordToken: string, password: s
 export const getUser = async () => {
   try {
     const response = await api.get("/auth/me");
+    return response.data;
+  } catch (error) {
+    throw error as ErrorResponse;
+  }
+}
+
+export const updateUser = async (data: UpdateUserData) => {
+  try {
+    const response = await api.put("/auth/update-user", data);
     return response.data;
   } catch (error) {
     throw error as ErrorResponse;

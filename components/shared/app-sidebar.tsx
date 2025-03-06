@@ -16,10 +16,13 @@ import {
 import Image from "next/image";
 import { Logo } from "@/assets/images";
 import {
+  Bot,
+  Brain,
   CircleUser,
   Headphones,
   LayoutDashboard,
   NotepadText,
+  Phone,
   PhoneCall,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -39,7 +42,7 @@ const data = {
     },
     {
       title: "Menu",
-      url: "#", 
+      url: "#",
       items: [
         {
           title: "Live Calls",
@@ -51,6 +54,21 @@ const data = {
           url: "/transcriptions",
           icon: <NotepadText />,
         },
+        {
+          title: "Assistants",
+          url: "/assistants",
+          icon: <Bot className="size-5" />,
+        },
+        {
+          title: "Knowledge Base",
+          url: "/knowledge-base",
+          icon: <Brain className="size-5" />,
+        },
+        {
+          title: "Phone Numbers",
+          url: "/phone-numbers",
+          icon: <Phone className="size-5" />,
+        },
       ],
     },
     {
@@ -58,7 +76,7 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Account Settings", 
+          title: "Account Settings",
           url: "/settings",
           icon: <CircleUser className="size-5" />,
         },
@@ -90,9 +108,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem 
+                  <SidebarMenuItem
                     key={item.title}
-                    className={pathname === item.url ? "bg-[#f3f4f6] rounded-md" : ""}
+                    className={
+                      pathname === item.url ? "rounded-md bg-[#f3f4f6]" : ""
+                    }
                   >
                     <SidebarMenuButton asChild>
                       <a href={item.url} className="flex items-center gap-2">

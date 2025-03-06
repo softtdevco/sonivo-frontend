@@ -6,9 +6,12 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import Billing from "./Billing"
+import Profile from "./Profile"
+import Credits from "./Credits"
 export function TabsDemo() {
+  
   return (
-    <Tabs defaultValue="billing" className="w-full">
+    <Tabs defaultValue="profile" className="w-full">
       <TabsList className="flex justify-between md:w-[70%]">
         <TabsTrigger value="profile">Profile</TabsTrigger>
         <TabsTrigger value="preferences">Preferences</TabsTrigger>
@@ -19,7 +22,7 @@ export function TabsDemo() {
         <TabsTrigger value="credits">Credits</TabsTrigger>
       </TabsList>
       <TabsContent value="profile">
-        <h1>Profile</h1>
+        <Profile />
       </TabsContent>
       <TabsContent value="preferences">
         <h1>Preferences</h1>
@@ -37,7 +40,7 @@ export function TabsDemo() {
         <Billing />
       </TabsContent>
       <TabsContent value="credits">
-        <h1>Credits</h1>
+        <Credits />
       </TabsContent>
     </Tabs>
   )

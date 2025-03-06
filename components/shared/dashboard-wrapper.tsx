@@ -1,4 +1,5 @@
 "use client"
+import { useUserContext } from "@/app/contexts/userContext";
 import { AppSidebar } from "@/components/shared/app-sidebar";
 import {
   Breadcrumb,
@@ -24,9 +25,13 @@ const DashboardWrapper = ({
   header: React.ReactNode;
 }) => {
   const { data: user } = useGetUser();
+  const { setUser } = useUserContext()
+
   useEffect(() => {
-    if (user === null) {
+    if (user === null || localStorage.getItem("access_token") === null) {
       redirect("/login")
+    } else {
+      setUser(user)
     }
   }, [user])
   return (
@@ -42,7 +47,11 @@ const DashboardWrapper = ({
               <BreadcrumbItem className=" ">
                 <FaCircleUser className="size-5 mr-4" />
               </BreadcrumbItem>
-              <BreadcrumbItem>
+              <BreadcrumbItem onClick={() => {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                redirect("/login");
+              }} className="cursor-pointer">
                 <MdOutlineLogout className="size-5" />
               </BreadcrumbItem>
             </BreadcrumbList>

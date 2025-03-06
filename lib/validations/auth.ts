@@ -46,3 +46,12 @@ export const resetPasswordSchema = z.object({
     otp: z.string().min(6, "OTP must be 6 digits"),
     token: z.string(),
 })
+
+export const profileSchema = z.object({
+  fullName: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().optional(),
+  companyName: z.string().optional()
+})
+
+
