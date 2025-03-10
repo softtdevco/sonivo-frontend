@@ -17,7 +17,6 @@ const Page = () => {
     >
       <div className="bg-white px-7 py-6">
         <Upload />
-        
       </div>
       <UploadsList />
     </DashboardWrapper>

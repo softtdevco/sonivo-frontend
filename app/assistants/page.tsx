@@ -5,8 +5,8 @@ import DashboardWrapper from "@/components/shared/dashboard-wrapper";
 import EmptyState from "./components/EmptyState";
 import CreateAssistant from "./components/CreateAssistant";
 import Lists from "./components/Lists";
-
-
+import { useGetAssistants } from "@/service/assistant/assistant";
+import { Loader2 } from "lucide-react";
 
 export type Assistant = {
   id: string;
@@ -17,15 +17,7 @@ export type Assistant = {
 };
 
 const Page = () => {
-  const [assistants, setAssistants] = useState<Assistant[]>([
-    {
-      id: "fc6b2b1b-f9fe-4bbb-b322-fa12c03a50bd",
-      name: "My Assistant",
-      description: "Description 1",
-      createdAt: "17 Jan 2025, 10:45 AM",
-      updatedAt: "2021-01-01",
-    },
-  ]);
+  const {data: assistants, isLoading} = useGetAssistants();
 
   return (
     <DashboardWrapper
@@ -37,12 +29,16 @@ const Page = () => {
         </BreadcrumbList>
       }
     >
-      {assistants.length === 0 ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center h-full">
+          <Loader2 className="w-10 h-10 animate-spin" />
+        </div>
+      ) : assistants.length === 0 ? (
         <EmptyState />
       ) : (
         <>
           <CreateAssistant />
-           <Lists assistants={assistants} />
+          <Lists assistants={assistants} />
         </>
       )}
     </DashboardWrapper>

@@ -21,7 +21,21 @@ export function useCreateSubscription() {
   return useMutation({
     mutationFn: (data: createSubscriptionData) => createSubscription(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions"] });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptions"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsHistories"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsConfig"],
+        exact: true,
+        refetchType: 'all'
+      });
     },
   });
 }
@@ -52,7 +66,23 @@ export function useUpdateSubscription() {
   return useMutation({
     mutationFn: (data: { subscriptionConfigId: string }) => updateSubscription(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions", "subscriptionsHistories", "subscriptionsConfig"] });
+      // Immediately update the cache with the updated subscriptio
+      // Force invalidate all related queries with exact match
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptions"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsHistories"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsConfig"],
+        exact: true,
+        refetchType: 'all'
+      });
     },
   });
 }
@@ -62,7 +92,21 @@ export function useCancelSubscription() {
   return useMutation({
     mutationFn: (data: { reason: string }) => cancelUserSubscription(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions", "subscriptionsHistories", "subscriptionsConfig"] });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptions"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsHistories"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsConfig"],
+        exact: true,
+        refetchType: 'all'
+      });
     },
   });
 }
@@ -72,7 +116,21 @@ export function useReactivateSubscription() {
   return useMutation({
     mutationFn: (data: { subscriptionConfigId: string }) => reactivateUserSubscription(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["subscriptions", "subscriptionsHistories", "subscriptionsConfig"] });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptions"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsHistories"],
+        exact: true,
+        refetchType: 'all'
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["subscriptionsConfig"],
+        exact: true,
+        refetchType: 'all'
+      });
     },
   });
 }
