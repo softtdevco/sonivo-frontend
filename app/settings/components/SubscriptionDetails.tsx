@@ -115,7 +115,12 @@ const SubscriptionDetails = () => {
                       handleCancelClick(config.id);
                     }
                   } else if (!isPending) {
-                    handleUpgrade(config.id);
+                    if (!subscription?.subscriptionRef) {
+                      // Redirect to payment page for new subscription
+                      window.location.href = `/settings/payment?subscriptionId=${config.id}`;
+                    } else {
+                      handleUpgrade(config.id);
+                    }
                   }
                 }}
                 className={`inline-flex h-[50px] items-center justify-center gap-1.5 self-stretch rounded-xl px-5 py-3 ${
@@ -143,7 +148,9 @@ const SubscriptionDetails = () => {
                     >
                       {subscription?.subscriptionRef?.id === config.id
                         ? "Current plan"
-                        : "Upgrade Plan"}
+                        : subscription?.subscriptionRef
+                          ? "Upgrade Plan"
+                          : "Create Plan"}
                     </div>
                     {subscription?.subscriptionRef?.id === config.id && (
                       <div className="hidden text-center text-base font-medium leading-[14.40px] group-hover:block">
