@@ -13,13 +13,13 @@ export function TabsDemo() {
   return (
     <Tabs defaultValue="profile" className="w-full">
       <TabsList className="flex justify-between md:w-[70%]">
-        <TabsTrigger value="profile">Profile</TabsTrigger>
-        <TabsTrigger value="preferences">Preferences</TabsTrigger>
-        <TabsTrigger value="notifications">Notifications</TabsTrigger>
-        <TabsTrigger value="integrations">Integrations</TabsTrigger>
-        <TabsTrigger value="security">Security</TabsTrigger>
-        <TabsTrigger value="billing">Billing</TabsTrigger>
-        <TabsTrigger value="credits">Credits</TabsTrigger>
+        <TabsTrigger value="profile" className="data-[state=active]:border-b-[#EF5A3C]">Profile</TabsTrigger>
+        <TabsTrigger value="preferences" className="data-[state=active]:border-b-[#EF5A3C]">Preferences</TabsTrigger>
+        <TabsTrigger value="notifications" className="data-[state=active]:border-b-[#EF5A3C]">Notifications</TabsTrigger>
+        <TabsTrigger value="integrations" className="data-[state=active]:border-b-[#EF5A3C]">Integrations</TabsTrigger>
+        <TabsTrigger value="security" className="data-[state=active]:border-b-[#EF5A3C]">Security</TabsTrigger>
+        <TabsTrigger value="billing" className="data-[state=active]:border-b-[#EF5A3C]">Billing</TabsTrigger>
+        <TabsTrigger value="credits" className="data-[state=active]:border-b-[#EF5A3C]">Credits</TabsTrigger>
       </TabsList>
       <TabsContent value="profile">
         <Profile />

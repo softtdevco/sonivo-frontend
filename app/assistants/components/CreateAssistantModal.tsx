@@ -11,6 +11,9 @@ import { useCreateAssistant } from "@/service/assistant/assistant";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import "./customModal.css";
+import { ErrorResponse } from "@/service/auth/authServices";
+
 const CreateAssistantModal = ({
   open,
   setOpen,
@@ -30,14 +33,16 @@ const CreateAssistantModal = ({
         setName("");
         router.push(`/assistants/${response.id}`);
       },
-      onError: (error) => {
+      onError: (error:  ErrorResponse) => {
         toast.error(error.response?.data?.message || "Failed to create assistant");
       }
     });
   }
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
+    <Modal open={open} onClose={() => setOpen(false)} classNames={{
+      modal: "custom-modal"
+    }}>
       <div className="shadow-[0px_21px_35px_0px_rgba(0,0,0,0.05)]w-[400px] inline-flex h-[701px] flex-col gap-8 overflow-hidden rounded-bl-[20px] rounded-br-[20px] bg-white px-8 py-6">
         <div className="flex h-[75px] flex-col items-start justify-start gap-2 self-stretch">
           <div className="self-stretch text-base font-semibold text-gray-600">
@@ -53,7 +58,7 @@ const CreateAssistantModal = ({
             <div className="inline-flex items-center justify-center gap-2">
               <div>
                 <span className="text-sm font-normal leading-[17.50px] text-[#272728]">
-                  Assistant's name
+                  Assistant&apos;s name
                 </span>
                 <span className="text-sm font-normal leading-[17.50px] text-[#ef5a3c]">
                   *
@@ -84,7 +89,7 @@ const CreateAssistantModal = ({
                   Blank Template
                 </div>
                 <div className="self-stretch text-xs font-normal leading-[15px] text-[#c69389]">
-                  This blank slate template with minimal configurations. It's a
+                  This blank slate template with minimal configurations. It&apos;s a
                   starting point for creating your custom assistant.
                 </div>
               </div>
