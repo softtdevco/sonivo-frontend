@@ -6,11 +6,17 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import DashboardWrapper from "@/components/shared/dashboard-wrapper";
-import React from "react";
-import { useGetAssistantById } from "@/service/assistant/assistant";
+import React, { useState, useEffect } from "react";
+import {
+  useGetAssistantById,
+  useUpdateAssistantName,
+  useAssignPhoneNumber,
+  useUnassignPhoneNumber,
+  usePublishAssistant,
+} from "@/service/assistant/assistant";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { FaPen } from "react-icons/fa6";
+import { FaPen, FaCheck } from "react-icons/fa6";
 import {
   Phone,
   MessageSquare,
@@ -25,17 +31,125 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CallTab from "./components/CallTab";
 import Model from "./components/Model";
+import { toast } from "react-toastify";
+import { ErrorResponse } from "@/service/auth/authServices";
 
-const Page = ({ params }: { params: { id: string } }) => {
-  const { data: assistant, isLoading } = useGetAssistantById(params.id);
+import { useGetPhoneNumbers } from "@/service/phone-numbers/phoneNumbers";
+import AssignPhoneNumberModal from "./components/AssignPhoneNumberModal";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+import ToolsTab from "./components/ToolsTab";
+
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const unwrappedParams = React.use(params);
+  const { data: assistant, isLoading } = useGetAssistantById(unwrappedParams.id);
+  const { mutate: updateAssistantName } = useUpdateAssistantName(unwrappedParams.id);
+  const [name, setName] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [isPhoneNumberModalOpen, setIsPhoneNumberModalOpen] = useState(false);
+  const { data: phoneNumbers } = useGetPhoneNumbers();
+  const { mutateAsync: assignPhoneNumber } = useAssignPhoneNumber(unwrappedParams.id);
+  const { mutateAsync: unassignPhoneNumber } = useUnassignPhoneNumber(unwrappedParams.id);
+  const { mutateAsync: publishAssistant } = usePublishAssistant(unwrappedParams.id);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (assistant?.name) {
+      setName(assistant.name);
+    }
+  }, [assistant?.name]);
 
   if (isLoading) {
     return (
-      <div className="flex h-full items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <Loader2 className="h-10 w-10 animate-spin" />
       </div>
     );
   }
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    if (!name) {
+      toast.error("Name is required");
+      return;
+    }
+    updateAssistantName({ name: name }, {
+      onSuccess: () => {
+        setIsEditing(false);
+      },
+      onError: (error: ErrorResponse) => {
+        toast.error(error.response.data.message);
+      },
+    });
+  };
+
+  const handleAssignNumber = async (phoneNumberId: string) => {
+    try {
+      await assignPhoneNumber(
+        { phoneNumberId },
+        {
+          onSuccess: () => {
+            setIsPhoneNumberModalOpen(false);
+            toast.success("Phone number assigned successfully");
+          },
+          onError: (error: ErrorResponse) => {
+            toast.error(error.response.data.message);
+          },
+        }
+      );
+    } catch (error) {
+      // Error is handled in onError callback
+    }
+  };
+
+  const handleUnassignNumber = async (phoneNumberId: string) => {
+    try {
+      await unassignPhoneNumber(
+        { phoneNumberId },
+        {
+          onSuccess: () => {
+            setIsPhoneNumberModalOpen(false);
+            toast.success("Phone number unassigned successfully");
+          },
+          onError: (error: ErrorResponse) => {
+            toast.error(error.response.data.message);
+          },
+        }
+      );
+    } catch (error) {
+      // Error is handled in onError callback
+    }
+  };
+
+  const openPublishModal = () => {
+    setIsPublishModalOpen(true);
+  };
+
+  const handlePublishConfirm = async () => {
+    setIsPublishing(true);
+    try {
+      await publishAssistant(
+        {},
+        {
+          onSuccess: () => {
+            toast.success(`Assistant ${assistant?.isPublished ? 'unpublished' : 'published'} successfully`);
+          },
+          onError: (error: ErrorResponse) => {
+            toast.error(error.response.data.message);
+          },
+        }
+      );
+    } catch (error) {
+      // Error is handled in onError callback
+    } finally {
+      setIsPublishing(false);
+      setIsPublishModalOpen(false);
+    }
+  };
 
   return (
     <DashboardWrapper
@@ -44,10 +158,10 @@ const Page = ({ params }: { params: { id: string } }) => {
           <div className="flex items-center gap-2">
             <BreadcrumbItem className="hidden md:block">
               <BreadcrumbLink
-                href="/dashboard"
+                href="/assistants"
                 className="text-base font-medium text-[#4d4d4d]"
               >
-                Dashboard
+                Assistants
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="hidden md:block" />
@@ -64,23 +178,40 @@ const Page = ({ params }: { params: { id: string } }) => {
             <div className="inline-flex items-center justify-center gap-3">
               <Input
                 className="text-[21.30px] font-normal leading-relaxed text-[#1c2833] outline-0 focus:outline-0"
-                value={assistant?.name}
+                value={name}
+                onChange={handleNameChange}
+                type="text"
               />
-              <div data-svg-wrapper className="relative">
-                <FaPen className="h-4 w-4 text-[#1c2833]" />
+              <div 
+                data-svg-wrapper 
+                className="relative cursor-pointer" 
+                onClick={isEditing ? handleSave : undefined}
+              >
+                {isEditing ? (
+                  <FaCheck className="h-4 w-4 text-green-600" />
+                ) : (
+                  <FaPen className="h-4 w-4 text-[#1c2833]" />
+                )}
               </div>
             </div>
-            <div className="mb-4 inline-flex items-start justify-start gap-4 flex-wrap">
+            <div className="mb-4 inline-flex flex-wrap items-start justify-start gap-4">
               <div className="flex items-center gap-1.5 self-stretch rounded-xl bg-[#131313] px-5 py-3">
                 <PhoneCall className="h-4 w-4 text-white" />
                 <div className="strokeWidth text-center text-base font-medium leading-[14.40px] text-white">
                   Test Call
                 </div>
               </div>
-              <div className="flex h-[39px] w-fit items-center gap-1.5 rounded-xl border border-[#dedede] px-5 py-3">
+              <div 
+                className="flex h-[39px] w-fit items-center gap-1.5 rounded-xl border border-[#dedede] px-5 py-3 cursor-pointer"
+                onClick={() => setIsPhoneNumberModalOpen(true)}
+              >
                 <MessageSquare className="text-black h-4 w-4" />
                 <div className="strokeWidth text-center text-base font-medium leading-[14.40px] text-[#131313]">
-                  Assign Number
+                  {assistant?.assignedNumber ? (
+                    <span>{assistant.assignedNumber.phonenumber}</span>
+                  ) : (
+                    "Assign Number"
+                  )}
                 </div>
               </div>
               <div className="flex h-[39px] w-fit items-center gap-1.5 rounded-xl border border-[#dedede] px-5 py-3">
@@ -93,6 +224,27 @@ const Page = ({ params }: { params: { id: string } }) => {
                 <Copy className="text-black h-4 w-4" />
                 <div className="strokeWidth text-center text-base font-medium leading-[14.40px] text-[#131313]">
                   Duplicate
+                </div>
+              </div>
+              <div 
+                className={`flex h-[39px] w-fit items-center gap-1.5 rounded-xl px-5 py-3 cursor-pointer ${
+                  assistant?.isPublished 
+                    ? "bg-red-50 border border-red-200 hover:bg-red-100" 
+                    : "border border-[#dedede] hover:bg-gray-50"
+                }`}
+                onClick={openPublishModal}
+              >
+                <Sparkles className={`h-4 w-4 ${assistant?.isPublished ? "text-red-500" : "text-black"}`} />
+                <div className={`strokeWidth text-center text-base font-medium leading-[14.40px] ${
+                  assistant?.isPublished ? "text-red-500" : "text-[#131313]"
+                }`}>
+                  {isPublishing ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : assistant?.isPublished ? (
+                    "Unpublish"
+                  ) : (
+                    "Publish"
+                  )}
                 </div>
               </div>
               <div className="flex h-[39px] w-fit items-center gap-1.5 rounded-xl border border-[#dedede] px-5 py-3">
@@ -109,7 +261,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="strokeWidth text-base font-normal leading-tight text-[#555e67]">
                 Edit assistant
               </div>
-              <Tabs defaultValue="call">
+              <Tabs defaultValue="model">
                 <TabsList className="inline-flex items-center justify-start gap-px rounded-3xl bg-neutral-100 px-[5px] py-1 shadow-[inset_0px_-1px_12px_0px_rgba(0,0,0,0.02)]">
                   <TabsTrigger
                     value="model"
@@ -155,13 +307,14 @@ const Page = ({ params }: { params: { id: string } }) => {
                 </TabsList>
                 <TabsContent value="model">
                   {/* Model tab content here */}
-                  <Model modelConfiguration={assistant?.modelConfiguration} />
+                  <Model modelConfiguration={assistant?.modelConfiguration} id={unwrappedParams.id} />
                 </TabsContent>
                 <TabsContent value="call">
                   <CallTab callConfiguration={assistant?.callConfiguration} />
                 </TabsContent>
                 <TabsContent value="tools">
                   {/* Tools tab content here */}
+                  <ToolsTab tools={assistant?.tools} id={unwrappedParams.id} />  
                 </TabsContent>
                 <TabsContent value="post-processing">
                   {/* Post-processing tab content here */}
@@ -174,6 +327,45 @@ const Page = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
       </div>
+
+      <AssignPhoneNumberModal
+        isOpen={isPhoneNumberModalOpen}
+        onOpenChange={setIsPhoneNumberModalOpen}
+        phoneNumbers={phoneNumbers?.data}
+        onAssign={handleAssignNumber}
+        onUnassign={handleUnassignNumber}
+        assignedNumber={assistant?.assignedNumber}
+      />
+
+      <AlertDialog open={isPublishModalOpen} onOpenChange={setIsPublishModalOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {assistant?.isPublished ? 'Unpublish Assistant' : 'Publish Assistant'}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {assistant?.isPublished 
+                ? 'Are you sure you want to unpublish this assistant? It will no longer be available for use.'
+                : 'Are you sure you want to publish this assistant? It will be available for use.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handlePublishConfirm}
+              className={assistant?.isPublished ? 'bg-red-600 hover:bg-red-700' : ''}
+            >
+              {isPublishing ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : assistant?.isPublished ? (
+                'Unpublish'
+              ) : (
+                'Publish'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardWrapper>
   );
 };

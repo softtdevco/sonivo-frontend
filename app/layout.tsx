@@ -10,7 +10,7 @@ const inter = Inter({
   display: "swap",
   preload: true,
 });
-//j
+
 export const metadata: Metadata = {
   title: "TransKript",
   description: "",
@@ -24,11 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className={`${inter.className} antialiased`}>
-        <QueryProvider>
-          <UserProvider>
-            <main>{children}</main>
-          </UserProvider>
-        </QueryProvider>
+        <UserProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </UserProvider>
         <ToastContainer />
       </body>
     </html>
