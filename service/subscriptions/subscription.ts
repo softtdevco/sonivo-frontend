@@ -56,7 +56,8 @@ export function useGetSubscriptionConfig() {
 export function useUpdateSubscription() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: { subscriptionConfigId: string }) => updateSubscription(data),
+    mutationFn: (data: { subscriptionConfigId: string }) =>
+      updateSubscription(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["subscriptions"] });
       queryClient.invalidateQueries({ queryKey: ["subscriptionsHistories"] });
@@ -104,6 +105,9 @@ export function useTopUpCredit() {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["user", "subscriptionsHistories"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["credit"],
       });
     },
   });
