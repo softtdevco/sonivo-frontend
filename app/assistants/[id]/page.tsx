@@ -81,8 +81,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       onSuccess: () => {
         setIsEditing(false);
       },
-      onError: (error: ErrorResponse) => {
-        toast.error(error.response.data.message);
+      onError: (error: unknown) => {
+        const typedError = error as ErrorResponse;
+        toast.error(typedError.response.data.message);
       },
     });
   };
@@ -96,13 +97,15 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             setIsPhoneNumberModalOpen(false);
             toast.success("Phone number assigned successfully");
           },
-          onError: (error: ErrorResponse) => {
-            toast.error(error.response.data.message);
+          onError: (error: unknown) => {
+            const typedError = error as ErrorResponse;
+            toast.error(typedError.response.data.message);
           },
         }
       );
-    } catch (error) {
-      // Error is handled in onError callback
+    } catch (error: unknown) {
+      const typedError = error as ErrorResponse;
+      toast.error(typedError.response.data.message);
     }
   };
 
@@ -115,13 +118,15 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             setIsPhoneNumberModalOpen(false);
             toast.success("Phone number unassigned successfully");
           },
-          onError: (error: ErrorResponse) => {
-            toast.error(error.response.data.message);
+          onError: (error: unknown) => {
+            const typedError = error as ErrorResponse;
+            toast.error(typedError.response.data.message);
           },
         }
       );
-    } catch (error) {
-      // Error is handled in onError callback
+    } catch (error: unknown) {
+      const typedError = error as ErrorResponse;
+      toast.error(typedError.response.data.message);
     }
   };
 
@@ -138,13 +143,15 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
           onSuccess: () => {
             toast.success(`Assistant ${assistant?.isPublished ? 'unpublished' : 'published'} successfully`);
           },
-          onError: (error: ErrorResponse) => {
-            toast.error(error.response.data.message);
+          onError: (error: unknown) => {
+            const typedError = error as ErrorResponse;
+            toast.error(typedError.response.data.message);
           },
         }
       );
-    } catch (error) {
-      // Error is handled in onError callback
+    } catch (error: unknown) {
+      const typedError = error as ErrorResponse;
+      toast.error(typedError.response.data.message);
     } finally {
       setIsPublishing(false);
       setIsPublishModalOpen(false);

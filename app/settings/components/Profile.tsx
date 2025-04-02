@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { INPUT_BASE_CLASSES } from "@/app/(auth)/register/page";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useUpdateUser } from "@/service/auth/auth";
@@ -21,6 +20,7 @@ const Profile = () => {
   const { user } = useUserContext();
   const { mutate: updateUser, isPending } = useUpdateUser();
   const { data: subscription } = useGetUserSubscription();
+  const INPUT_BASE_CLASSES = "-mt-1 rounded-xl border bg-neutral-50 px-[20.52px] py-5 pl-10";
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {

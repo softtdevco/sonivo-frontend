@@ -6,6 +6,7 @@ import { useCreatePhoneNumberTwilio, useUpdatePhoneNumberTwilio } from "@/servic
 import { Loader2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { PhoneNumber } from "../page";
 
 const TwilioImport = ({ 
   setOpen, 
@@ -15,7 +16,7 @@ const TwilioImport = ({
 }: { 
   setOpen: (open: boolean) => void;
   mode?: "create" | "edit";
-  phoneNumberData?: any;
+  phoneNumberData?: PhoneNumber;
   phoneNumberId?: string;
 }) => {
   const [phoneNumber, setPhoneNumber] = useState('');

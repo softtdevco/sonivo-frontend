@@ -31,7 +31,7 @@ const KnowledgeBaseList: React.FC<KnowledgeBaseListProps> = ({ files }) => {
     else return (bytes / 1073741824).toFixed(1) + ' GB';
   };
 
-  const getFileIcon = (extension: string) => {
+  const getFileIcon = () => {
     // You can customize this based on file types
     return <FileIcon className="h-4 w-4" />;
   };
