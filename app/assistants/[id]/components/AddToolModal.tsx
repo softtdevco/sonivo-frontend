@@ -19,7 +19,7 @@ interface Parameter {
   description: string;
 }
 
-const AddToolModal = ({ open, setOpen, id, tools }: { open: boolean; setOpen: (open: boolean) => void, id: string, tools: Tool[] }) => {
+const AddToolModal = ({ open, setOpen, id }: { open: boolean; setOpen: (open: boolean) => void, id: string, tools: Tool[] }) => {
   // State for form fields
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -33,7 +33,7 @@ const AddToolModal = ({ open, setOpen, id, tools }: { open: boolean; setOpen: (o
   ]);
   const [fixedParams, setFixedParams] = useState("");
 
-  const { mutate: addTool, isPending } = useAddTool(id);
+  const { mutate: addTool } = useAddTool(id);
 
 
 
@@ -62,9 +62,20 @@ const AddToolModal = ({ open, setOpen, id, tools }: { open: boolean; setOpen: (o
   };
 
   // Handle updating a parameter
-  const updateParameter = (index: number, field: keyof Parameter, value: string | boolean) => {
+  const updateParameter = (
+    index: number, 
+    field: keyof Parameter, 
+    value: string | boolean
+  ) => {
     const updatedParameters = [...parameters];
-    updatedParameters[index][field] = value;
+    
+    // Type assertion to fix the error
+    if (field === 'required') {
+      updatedParameters[index][field] = value as boolean;
+    } else {
+      updatedParameters[index][field] = value as string;
+    }
+    
     setParameters(updatedParameters);
   };
 

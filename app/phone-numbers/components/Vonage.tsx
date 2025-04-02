@@ -6,7 +6,7 @@ import { ErrorResponse } from '@/service/auth/authServices'
 import { toast } from 'react-toastify'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
-
+import { PhoneNumber } from '../page'
 const Vonage = ({ 
   setOpen,
   mode = "create",
@@ -15,7 +15,7 @@ const Vonage = ({
 }: { 
   setOpen: (open: boolean) => void;
   mode?: "create" | "edit";
-  phoneNumberData?: any;
+  phoneNumberData?: PhoneNumber;
   phoneNumberId?: string;
 }) => {
   const [phoneNumber, setPhoneNumber] = useState('');

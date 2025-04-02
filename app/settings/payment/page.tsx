@@ -1,10 +1,9 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import PaymentWrapper from "../components/PaymentMethod";
 
 export default function PaymentPage() {
-  const searchParams = useSearchParams();
-  const subscriptionId = searchParams.get('subscriptionId');
+  const { subscriptionId } = useParams();
 
   if (!subscriptionId) {
     return <div>Invalid subscription ID</div>;
@@ -12,7 +11,7 @@ export default function PaymentPage() {
 
   return (
     <div className="container mx-auto py-8">
-      <PaymentWrapper subscriptionId={subscriptionId} />
+      <PaymentWrapper subscriptionId={subscriptionId as string} />
     </div>
   );
 } 

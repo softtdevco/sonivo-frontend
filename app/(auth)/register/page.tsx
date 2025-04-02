@@ -33,7 +33,7 @@ import { FormFieldWrapper } from "./components/form-field-wrapper";
 
 
 // Constants
-export const INPUT_BASE_CLASSES = "-mt-1 rounded-xl border bg-neutral-50 px-[20.52px] py-5 pl-10";
+const INPUT_BASE_CLASSES = "-mt-1 rounded-xl border bg-neutral-50 px-[20.52px] py-5 pl-10";
 const ICON_BASE_CLASSES = "absolute left-4 top-1/2 h-[13px] w-[13px] -translate-y-1/2";
 
 const Register = () => {

@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProvider from "@/utils/QueryProvider";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "@/app/contexts/userContext";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +26,11 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body className={`${inter.className} antialiased`}>
         <UserProvider>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
+          </QueryProvider>
         </UserProvider>
         <ToastContainer />
       </body>
