@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import { ErrorResponse, forgotPassword, login, setPassword, signUp, verifyEmail, verifyResetPassword } from "./authServices";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ErrorResponse, forgotPassword, getUser, login, setPassword, signUp, updateUser, verifyEmail, verifyResetPassword } from "./authServices";
 import { forgotPasswordSchema, loginSchema, registerSchema, resetPasswordSchema, verifyEmailSchema } from "@/lib/validations/auth";
 import * as z from "zod";
 
@@ -21,6 +21,12 @@ type SetPasswordData = {
   password: string;
   resetPasswordToken: string;
 };
+
+export type UpdateUserData = {
+  fullName: string;
+  phone?: string;
+  companyName?: string;
+}
 
 
 //Responses
@@ -46,6 +52,10 @@ export interface VerifyResetPasswordResponse {
 }
 
 export interface SetPasswordResponse {
+  message: string;
+}
+
+export interface UserUpdateResponse {
   message: string;
 }
 
@@ -102,6 +112,23 @@ export function useSetPasswordMutation() {
     mutationFn: (data: SetPasswordData) => setPassword(data),
     onSuccess: (response) => {
       return response;
+    }
+  });
+}
+
+export function useGetUser() {
+  return useQuery< ErrorResponse>({
+      queryKey: ['user'],
+      queryFn: () => getUser()
+  });
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+  return useMutation<UserUpdateResponse, ErrorResponse, UpdateUserData>({
+    mutationFn: (data: UpdateUserData) => updateUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
     }
   });
 }

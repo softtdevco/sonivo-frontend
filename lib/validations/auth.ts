@@ -2,14 +2,20 @@ import * as z from "zod"
 
 export const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
+    .regex(/\d/, "Password must contain at least one number"),
 })
 
 export const registerSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().optional(),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
+    .regex(/\d/, "Password must contain at least one number"),
   confirmPassword: z.string(),
   terms: z.boolean().refine((val) => val === true, {
     message: "You must accept the terms and conditions",
@@ -24,7 +30,10 @@ export const forgotPasswordSchema = z.object({
 })
 
 export const setPasswordSchema = z.object({
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
+    .regex(/\d/, "Password must contain at least one number"),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
@@ -40,3 +49,12 @@ export const resetPasswordSchema = z.object({
     otp: z.string().min(6, "OTP must be 6 digits"),
     token: z.string(),
 })
+
+export const profileSchema = z.object({
+  fullName: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().optional(),
+  companyName: z.string().optional()
+})
+
+

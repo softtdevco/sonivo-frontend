@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			syne: ['var(--font-syne)', 'sans-serif'],
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -187,7 +190,10 @@ export default {
   		},
   		animation: {
   			'caret-blink': 'caret-blink 1.25s ease-out infinite'
-  		}
+  		},
+		backgroundImage: {
+			'hero-image': "url('/graph.jpg')"
+		}
   	}
   },
   plugins: [animate],

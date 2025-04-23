@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import {
   Sidebar,
@@ -14,12 +16,16 @@ import {
 import Image from "next/image";
 import { Logo } from "@/assets/images";
 import {
+  Bot,
+  Brain,
   CircleUser,
   Headphones,
   LayoutDashboard,
   NotepadText,
+  Phone,
   PhoneCall,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const data = {
   navMain: [
@@ -29,7 +35,7 @@ const data = {
       items: [
         {
           title: "Dashboard",
-          url: "#",
+          url: "/dashboard",
           icon: <LayoutDashboard className="size-5" />,
         },
       ],
@@ -40,14 +46,28 @@ const data = {
       items: [
         {
           title: "Live Calls",
-          url: "#",
+          url: "/live-calls",
           icon: <PhoneCall className="size-5" />,
         },
         {
           title: "Transcriptions",
-          url: "#",
-          isActive: true,
+          url: "/transcriptions",
           icon: <NotepadText />,
+        },
+        {
+          title: "Assistants",
+          url: "/assistants",
+          icon: <Bot className="size-5" />,
+        },
+        {
+          title: "Knowledge Base",
+          url: "/knowledge-base",
+          icon: <Brain className="size-5" />,
+        },
+        {
+          title: "Phone Numbers",
+          url: "/phone-numbers",
+          icon: <Phone className="size-5" />,
         },
       ],
     },
@@ -57,12 +77,12 @@ const data = {
       items: [
         {
           title: "Account Settings",
-          url: "#",
+          url: "/settings",
           icon: <CircleUser className="size-5" />,
         },
         {
           title: "Support",
-          url: "#",
+          url: "/support",
           icon: <Headphones className="size-5" />,
         },
       ],
@@ -71,9 +91,11 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="bg-white">
         <Image src={Logo} alt="logo" width={100} height={100} />
       </SidebarHeader>
       <SidebarContent>
@@ -86,10 +108,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>
-                        {item.icon && <span className="">{item.icon}</span>}
+                  <SidebarMenuItem
+                    key={item.title}
+                    className={
+                      pathname === item.url ? "rounded-md bg-[#f3f4f6]" : ""
+                    }
+                  >
+                    <SidebarMenuButton asChild>
+                      <a href={item.url} className="flex items-center gap-2">
+                        {item.icon && <span>{item.icon}</span>}
                         {item.title}
                       </a>
                     </SidebarMenuButton>

@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Syne } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/utils/QueryProvider";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "@/app/contexts/userContext";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  preload: true,
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  weight: ["400", "500", "600", "700", "800"],
+  variable: '--font-syne',
 });
 
 export const metadata: Metadata = {
-  title: "Sonivo",
+  title: "TransKript",
   description: "",
 };
 
@@ -21,11 +32,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
-        <QueryProvider>
-          <main>{children}</main>
-        </QueryProvider>
+    <html lang="en" className={`${inter.className} ${syne.variable}`}>
+      <body className={`${inter.className} antialiased`}>
+        <UserProvider>
+          <QueryProvider>
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
+          </QueryProvider>
+        </UserProvider>
         <ToastContainer />
       </body>
     </html>

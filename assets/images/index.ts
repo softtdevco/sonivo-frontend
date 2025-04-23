@@ -1,3 +1,18 @@
-import Logo from "./Sonivo.svg"
+import Logo from "./Transkript.svg"
+import HeroImage from "./graph.jpg"
+import HeroImage2 from "./Hero.png"
+import Autodesk from "./Autodesk.png"
+import Cisco from "./Cisco.png"
+import Feica from "./Feica.png"
+import Frog from "./Frog.png"
+import Google from "./Google.png"
+import Intel from "./Intel.png"
+import Samsung from "./Samsung.png"
+import Visa from "./Visa.png"
+import feature1 from "./feature1.svg"
+import feature2 from "./feature2.svg"
+import feature3 from "./feature3.svg"
+import feature4 from "./feature4.svg"
+import feature5 from "./feature5.svg"
 
-export { Logo };
+export { Logo, HeroImage, HeroImage2, Autodesk, Cisco, Feica, Frog, Google, Intel, Samsung, Visa, feature1, feature2, feature3, feature4, feature5 };
