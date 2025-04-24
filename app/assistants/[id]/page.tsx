@@ -71,11 +71,11 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const [isPublishing, setIsPublishing] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (data.assist.name) {
-  //     setName(data.assist?.name);
-  //   }
-  // }, [data.assist?.name]);
+  useEffect(() => {
+    if (data) {
+      setName(data.assist?.name);
+    }
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -221,6 +221,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                 value={name}
                 onChange={handleNameChange}
                 type="text"
+                defaultValue={assistant.name!}
               />
               <div
                 data-svg-wrapper

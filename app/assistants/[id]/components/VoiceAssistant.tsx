@@ -3,8 +3,6 @@ import { getToken } from "@/service/openai/token";
 import { PhoneCall, PhoneOff } from "lucide-react";
 import React, { useRef, useState } from "react";
 
-
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function VoiceAssistant({ assistance }: any) {
   const [connected, setConnected] = useState(false);
@@ -186,7 +184,7 @@ export default function VoiceAssistant({ assistance }: any) {
           JSON.stringify({
             type: "session.update",
             session: {
-              instructions: assist.instructions,
+              instructions: `${assist.instructions}`,
               temperature: 0.8,
               tools: assist.tools,
               voice: assist.voice,
