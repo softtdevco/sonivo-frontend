@@ -184,7 +184,7 @@ export default function VoiceAssistant({ assistance }: any) {
           JSON.stringify({
             type: "session.update",
             session: {
-              instructions: `${assist.instructions}`,
+              instructions: assist.instructions,
               temperature: 0.8,
               tools: assist.tools,
               voice: assist.voice,
