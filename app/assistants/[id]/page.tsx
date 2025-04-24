@@ -36,28 +36,46 @@ import { ErrorResponse } from "@/service/auth/authServices";
 
 import { useGetPhoneNumbers } from "@/service/phone-numbers/phoneNumbers";
 import AssignPhoneNumberModal from "./components/AssignPhoneNumberModal";
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 import ToolsTab from "./components/ToolsTab";
+import VoiceAssistant from "./components/VoiceAssistant";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const unwrappedParams = React.use(params);
-  const { data: assistant, isLoading } = useGetAssistantById(unwrappedParams.id);
-  const { mutate: updateAssistantName } = useUpdateAssistantName(unwrappedParams.id);
+  const { data, isLoading, isError } = useGetAssistantById(unwrappedParams.id);
+  const { mutate: updateAssistantName } = useUpdateAssistantName(
+    unwrappedParams.id,
+  );
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isPhoneNumberModalOpen, setIsPhoneNumberModalOpen] = useState(false);
   const { data: phoneNumbers } = useGetPhoneNumbers();
-  const { mutateAsync: assignPhoneNumber } = useAssignPhoneNumber(unwrappedParams.id);
-  const { mutateAsync: unassignPhoneNumber } = useUnassignPhoneNumber(unwrappedParams.id);
-  const { mutateAsync: publishAssistant } = usePublishAssistant(unwrappedParams.id);
+  const { mutateAsync: assignPhoneNumber } = useAssignPhoneNumber(
+    unwrappedParams.id,
+  );
+  const { mutateAsync: unassignPhoneNumber } = useUnassignPhoneNumber(
+    unwrappedParams.id,
+  );
+  const { mutateAsync: publishAssistant } = usePublishAssistant(
+    unwrappedParams.id,
+  );
   const [isPublishing, setIsPublishing] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (assistant?.name) {
-      setName(assistant.name);
-    }
-  }, [assistant?.name]);
+  // useEffect(() => {
+  //   if (data.assist.name) {
+  //     setName(data.assist?.name);
+  //   }
+  // }, [data.assist?.name]);
 
   if (isLoading) {
     return (
@@ -66,6 +84,16 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
     );
   }
+
+  if (isError) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-red-500">Error loading assistant</p>
+      </div>
+    );
+  }
+
+  const assistant = data?.assist;
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -77,15 +105,18 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       toast.error("Name is required");
       return;
     }
-    updateAssistantName({ name: name }, {
-      onSuccess: () => {
-        setIsEditing(false);
+    updateAssistantName(
+      { name: name },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+        onError: (error: unknown) => {
+          const typedError = error as ErrorResponse;
+          toast.error(typedError.response.data.message);
+        },
       },
-      onError: (error: unknown) => {
-        const typedError = error as ErrorResponse;
-        toast.error(typedError.response.data.message);
-      },
-    });
+    );
   };
 
   const handleAssignNumber = async (phoneNumberId: string) => {
@@ -101,7 +132,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             const typedError = error as ErrorResponse;
             toast.error(typedError.response.data.message);
           },
-        }
+        },
       );
     } catch (error: unknown) {
       const typedError = error as ErrorResponse;
@@ -122,7 +153,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             const typedError = error as ErrorResponse;
             toast.error(typedError.response.data.message);
           },
-        }
+        },
       );
     } catch (error: unknown) {
       const typedError = error as ErrorResponse;
@@ -141,13 +172,15 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
         {},
         {
           onSuccess: () => {
-            toast.success(`Assistant ${assistant?.isPublished ? 'unpublished' : 'published'} successfully`);
+            toast.success(
+              `Assistant ${assistant?.isPublished ? "unpublished" : "published"} successfully`,
+            );
           },
           onError: (error: unknown) => {
             const typedError = error as ErrorResponse;
             toast.error(typedError.response.data.message);
           },
-        }
+        },
       );
     } catch (error: unknown) {
       const typedError = error as ErrorResponse;
@@ -189,9 +222,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                 onChange={handleNameChange}
                 type="text"
               />
-              <div 
-                data-svg-wrapper 
-                className="relative cursor-pointer" 
+              <div
+                data-svg-wrapper
+                className="relative cursor-pointer"
                 onClick={isEditing ? handleSave : undefined}
               >
                 {isEditing ? (
@@ -202,14 +235,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
             </div>
             <div className="mb-4 inline-flex flex-wrap items-start justify-start gap-4">
-              <div className="flex items-center gap-1.5 self-stretch rounded-xl bg-[#131313] px-5 py-3">
-                <PhoneCall className="h-4 w-4 text-white" />
-                <div className="strokeWidth text-center text-base font-medium leading-[14.40px] text-white">
-                  Test Call
-                </div>
-              </div>
-              <div 
-                className="flex h-[39px] w-fit items-center gap-1.5 rounded-xl border border-[#dedede] px-5 py-3 cursor-pointer"
+              <VoiceAssistant assistance={data.assistClientData!} />
+              <div
+                className="flex h-[39px] w-fit cursor-pointer items-center gap-1.5 rounded-xl border border-[#dedede] px-5 py-3"
                 onClick={() => setIsPhoneNumberModalOpen(true)}
               >
                 <MessageSquare className="text-black h-4 w-4" />
@@ -233,18 +261,22 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                   Duplicate
                 </div>
               </div>
-              <div 
-                className={`flex h-[39px] w-fit items-center gap-1.5 rounded-xl px-5 py-3 cursor-pointer ${
-                  assistant?.isPublished 
-                    ? "bg-red-50 border border-red-200 hover:bg-red-100" 
+              <div
+                className={`flex h-[39px] w-fit cursor-pointer items-center gap-1.5 rounded-xl px-5 py-3 ${
+                  assistant?.isPublished
+                    ? "border border-red-200 bg-red-50 hover:bg-red-100"
                     : "border border-[#dedede] hover:bg-gray-50"
                 }`}
                 onClick={openPublishModal}
               >
-                <Sparkles className={`h-4 w-4 ${assistant?.isPublished ? "text-red-500" : "text-black"}`} />
-                <div className={`strokeWidth text-center text-base font-medium leading-[14.40px] ${
-                  assistant?.isPublished ? "text-red-500" : "text-[#131313]"
-                }`}>
+                <Sparkles
+                  className={`h-4 w-4 ${assistant?.isPublished ? "text-red-500" : "text-black"}`}
+                />
+                <div
+                  className={`strokeWidth text-center text-base font-medium leading-[14.40px] ${
+                    assistant?.isPublished ? "text-red-500" : "text-[#131313]"
+                  }`}
+                >
                   {isPublishing ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : assistant?.isPublished ? (
@@ -314,14 +346,17 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                 </TabsList>
                 <TabsContent value="model">
                   {/* Model tab content here */}
-                  <Model modelConfiguration={assistant?.modelConfiguration} id={unwrappedParams.id} />
+                  <Model
+                    modelConfiguration={assistant?.modelConfiguration}
+                    id={unwrappedParams.id}
+                  />
                 </TabsContent>
                 <TabsContent value="call">
                   <CallTab callConfiguration={assistant?.callConfiguration} />
                 </TabsContent>
                 <TabsContent value="tools">
                   {/* Tools tab content here */}
-                  <ToolsTab tools={assistant?.tools} id={unwrappedParams.id} />  
+                  <ToolsTab tools={assistant?.tools} id={unwrappedParams.id} />
                 </TabsContent>
                 <TabsContent value="post-processing">
                   {/* Post-processing tab content here */}
@@ -344,30 +379,37 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
         assignedNumber={assistant?.assignedNumber}
       />
 
-      <AlertDialog open={isPublishModalOpen} onOpenChange={setIsPublishModalOpen}>
+      <AlertDialog
+        open={isPublishModalOpen}
+        onOpenChange={setIsPublishModalOpen}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {assistant?.isPublished ? 'Unpublish Assistant' : 'Publish Assistant'}
+              {assistant?.isPublished
+                ? "Unpublish Assistant"
+                : "Publish Assistant"}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {assistant?.isPublished 
-                ? 'Are you sure you want to unpublish this assistant? It will no longer be available for use.'
-                : 'Are you sure you want to publish this assistant? It will be available for use.'}
+              {assistant?.isPublished
+                ? "Are you sure you want to unpublish this assistant? It will no longer be available for use."
+                : "Are you sure you want to publish this assistant? It will be available for use."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handlePublishConfirm}
-              className={assistant?.isPublished ? 'bg-red-600 hover:bg-red-700' : ''}
+              className={
+                assistant?.isPublished ? "bg-red-600 hover:bg-red-700" : ""
+              }
             >
               {isPublishing ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : assistant?.isPublished ? (
-                'Unpublish'
+                "Unpublish"
               ) : (
-                'Publish'
+                "Publish"
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
