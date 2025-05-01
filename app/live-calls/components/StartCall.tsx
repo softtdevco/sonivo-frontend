@@ -1,39 +1,8 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { BsTelephoneOutboundFill } from "react-icons/bs";
-import { useGetSocketUrl } from "../../../service/live-calls/liveCalls";
 
 const StartCall = () => {
-  const {data: socketUrl} = useGetSocketUrl("67d03ddea2a47d257aa73066");
-  const wsRef = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    if (socketUrl && socketUrl.wsUrl) {
-      wsRef.current = new WebSocket(socketUrl.wsUrl);
-      wsRef.current.onopen = () => {
-        console.log("WebSocket connection opened");
-      };
-      wsRef.current.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        if (message.message === "socket started") {
-          console.log("Socket started message received");
-        }
-        // Handle other messages as needed
-      };
-      wsRef.current.onerror = (error) => {
-        console.error("WebSocket error:", error);
-      };
-      wsRef.current.onclose = () => {
-        console.log("WebSocket connection closed");
-      };
-    }
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
-  }, [socketUrl]);
-
   return (
     <>
       <div className="relative h-64 self-stretch rounded-2xl bg-violet-50 outline outline-2">
