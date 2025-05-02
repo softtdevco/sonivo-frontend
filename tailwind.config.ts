@@ -12,6 +12,7 @@ export default {
   	extend: {
   		fontFamily: {
   			syne: ['var(--font-syne)', 'sans-serif'],
+  			outfit: ['var(--font-outfit)', 'sans-serif'],
   		},
   		colors: {
   			background: 'hsl(var(--background))',
