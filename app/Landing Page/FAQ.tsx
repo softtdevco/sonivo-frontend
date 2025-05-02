@@ -22,21 +22,21 @@ const FAQ = () => {
     ]
     return (
         <>
-            <div className='bg-black-900 mx-auto h-full pb-20 pt-12'>
-                <div className="w-full inline-flex flex-col justify-start items-center gap-6 overflow-hidden">
-                    <div className="self-stretch h-20 text-center justify-center text-white text-5xl font-normal font-['Inter'] leading-[61.60px]">FAQs</div>
-                    <div className="w-full text-center justify-center text-white text-base font-normal font-['Inter'] leading-normal">Frequently asked questions</div>
+            <div className='bg-black-900 mx-auto h-full md:pb-20 pb-10 md:pt-12 pt-8'>
+                <div className="w-full inline-flex flex-col justify-start items-center md:gap-6 gap-3 overflow-hidden">
+                    <div className="self-stretch md:h-20 text-center justify-center text-white md:text-5xl text-3xl font-normal font-['Inter'] md:leading-[61.60px] leading-normal">FAQs</div>
+                    <div className="w-full text-center justify-center text-white md:text-base text-sm font-normal font-['Inter'] leading-normal">Frequently asked questions</div>
                 </div>
-                <div className="mx-auto w-[90%] space-y-6 mt-24">
+                <div className="mx-auto w-[90%] space-y-6 md:mt-24 mt-12">
                     {
                         faqData.map((item, index) => (
                             <Accordion type="single" collapsible key={index}>
-                                <AccordionItem value={`item-${index}`} className="bg-neutral-500/20 rounded-[10px] border-none px-10">
-                            <AccordionTrigger className="text-white text-2xl font-semibold font-['Inter'] leading-9 tracking-tight [&[data-state=open]>svg]:hidden [&[data-state=open]>div]:block">
+                                <AccordionItem value={`item-${index}`} className="bg-neutral-500/20 rounded-[10px] border-none md:px-10 px-4">
+                            <AccordionTrigger className="text-white md:text-2xl text-base font-semibold font-['Inter'] md:leading-9 leading-7 tracking-tight [&[data-state=open]>svg]:hidden [&[data-state=open]>div]:block text-left">
                                 {item.question}
                                 <div className="hidden h-4 w-4 shrink-0 text-white -mt-6">×</div>
                             </AccordionTrigger>
-                            <AccordionContent className="text-white/70 text-xl font-normal font-['Inter'] leading-loose tracking-tight">
+                            <AccordionContent className="text-white/70 md:text-xl text-base font-normal font-['Inter'] md:leading-loose leading-relaxed tracking-tight">
                                 {item.answer}
                             </AccordionContent>
                                 </AccordionItem>
@@ -44,7 +44,7 @@ const FAQ = () => {
                         ))
                     }
                 </div>
-                <div className="text-center justify-center text-white text-xl font-bold font-['Inter'] leading-loose tracking-tight mt-6">Need additional information?</div>
+                <div className="text-center justify-center text-white md:text-xl text-lg font-bold font-['Inter'] md:leading-loose leading-relaxed tracking-tight mt-6">Need additional information?</div>
             </div>
         </>
     );

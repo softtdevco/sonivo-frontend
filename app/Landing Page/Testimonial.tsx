@@ -30,14 +30,14 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <section className="w-full bg-gray-100 py-16 px-4 md:py-24">
+    <section className="w-full bg-gray-100 py-10 px-4 md:py-24">
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-start gap-12 md:gap-20">
         {/* Heading section */}
         <div className="flex flex-col items-center justify-start gap-6 max-w-3xl w-full">
-          <h2 className="font-['Inter'] text-4xl md:text-5xl font-normal leading-tight text-gray-800 text-center">
+          <h2 className="font-['Inter'] md:text-4xl text-xl font-normal leading-tight text-gray-800 text-center">
             Over 8,000 customers
           </h2>
-          <p className="font-['Inter'] text-base font-normal leading-normal text-gray-500 text-center">
+          <p className="font-['Inter'] md:text-base text-xs font-normal md:leading-normal leading-tight text-gray-500 text-center">
             What some of our 8,000+ customers across 100+ countries think of
             Transkript.
           </p>
