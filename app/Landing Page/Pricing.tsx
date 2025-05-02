@@ -1,5 +1,5 @@
 import React from "react";
-import { FaGift } from "react-icons/fa6";
+import { FaGift, FaRegCircleCheck } from "react-icons/fa6";
 import { FaCrown } from "react-icons/fa";
 import { GiCrystalShine } from "react-icons/gi";
 
@@ -47,7 +47,7 @@ const Pricing = () => {
               <div className="flex flex-col space-y-4 flex-1">
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Dialer
@@ -56,7 +56,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Call Broadcast
@@ -65,7 +65,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Messaging
@@ -74,7 +74,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Agent access
@@ -83,7 +83,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-3.5 w-5 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Phonebook limit: 1000
@@ -92,7 +92,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-3.5 w-3.5 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Device limit: 1
@@ -101,7 +101,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Plan duration: 7 days
@@ -110,7 +110,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Is trial?
@@ -154,7 +154,7 @@ const Pricing = () => {
               <div className="flex flex-col space-y-4 flex-1">
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Dialer
@@ -163,7 +163,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Call Broadcast
@@ -172,7 +172,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Messaging
@@ -181,7 +181,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Agent access
@@ -190,7 +190,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-3.5 w-5 bg-green-800 rounded-sm"></div>
+                          <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Phonebook limit: 5000
@@ -199,7 +199,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-3.5 w-3.5 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Device limit: 5
@@ -208,7 +208,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Plan duration: 30 days
@@ -217,7 +217,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-red-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-red-500 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Is trial?
@@ -261,7 +261,7 @@ const Pricing = () => {
               <div className="flex flex-col space-y-4 flex-1">
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Dialer
@@ -270,7 +270,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Call Broadcast
@@ -279,7 +279,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Messaging
@@ -288,7 +288,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Agent access
@@ -297,7 +297,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-3.5 w-5 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Phonebook limit: Unlimited
@@ -306,7 +306,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-3.5 w-3.5 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Device limit: Unlimited
@@ -315,7 +315,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-green-800 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-green-600 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Plan duration: 30 days
@@ -324,7 +324,7 @@ const Pricing = () => {
                 
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-5 flex items-center justify-center">
-                    <div className="h-4 w-4 bg-red-600 rounded-sm"></div>
+                    <FaRegCircleCheck className="h-4 w-4 text-red-500 rounded-sm" />
                   </div>
                   <div className="font-outfit text-sm font-normal leading-snug text-gray-800">
                     Is trial?

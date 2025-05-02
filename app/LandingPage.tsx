@@ -5,6 +5,9 @@ import HeroSection from './Landing Page/HeroSection'
 import Features from './Landing Page/Features'
 import Testimonial from './Landing Page/Testimonial'
 import Pricing from './Landing Page/Pricing'
+import FAQ from './Landing Page/FAQ'
+import Footer from './Landing Page/Footer'
+
 const LandingPage = () => {
   return (
     <>
@@ -14,6 +17,8 @@ const LandingPage = () => {
         <Features />
         <Testimonial />
         <Pricing />
+        <FAQ />
+        <Footer />
     </>
   )
 }
