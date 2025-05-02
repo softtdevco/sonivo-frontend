@@ -7,11 +7,11 @@ const Features = () => {
   return (
     <>
       <div className="bg-white pb-8">
-        <div className="mx-auto h-full w-[80%] pb-20 pt-12">
-          <div className="h-20 justify-center self-stretch text-center font-['Inter'] text-5xl font-normal leading-[61.60px] text-gray-800">
+        <div className="mx-auto h-full md:w-[80%] w-[90%] md:pb-20 pb-10 md:pt-12 pt-8">
+          <div className="h-20 justify-center self-stretch text-center font-['Inter'] md:text-5xl text-3xl font-normal leading-[61.60px] text-gray-800">
             Features
           </div>
-          <div className="justify-center self-stretch text-center font-['Inter'] text-base font-normal leading-normal text-gray-500">
+          <div className="justify-center self-stretch text-center font-['Inter'] md:text-base text-xs font-normal leading-normal text-gray-500">
             Transkript AI streamlines communication with features like a
             customisable Call Flow Builder, efficient Agent Access, automated
             Call Broadcasts, Tailored Training Data for personalised
@@ -23,7 +23,7 @@ const Features = () => {
           <div className="flex flex-col items-center justify-center">
             <div className="flex w-full flex-col gap-6">
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <div className="flex flex-col items-center justify-start overflow-hidden rounded-tl-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
+                <div className="flex flex-col items-center justify-start overflow-hidden md:rounded-tl-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
                   <Image
                     alt="feature1"
                     src={feature3}
@@ -31,10 +31,10 @@ const Features = () => {
                   />
 
                   <div className="flex flex-col items-center justify-start gap-4 px-4">
-                    <div className="justify-center self-stretch text-center font-['Inter'] text-2xl font-medium leading-tight text-neutral-700">
+                    <div className="justify-center self-stretch text-center font-['Inter'] md:text-2xl text-sm font-medium leading-tight text-neutral-700">
                       Ai Assistant
                     </div>
-                    <div className="justify-center text-center font-['Inter'] text-sm font-normal leading-tight text-gray-500">
+                    <div className="justify-center text-center font-['Inter'] md:text-sm text-[10px] font-normal leading-tight text-gray-500">
                       Transkript AI&apos;s Assistants integrate with VoIP
                       services to automate voice interactions. Configure them to
                       handle calls, provide responses, and execute tasks using
@@ -45,17 +45,17 @@ const Features = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-center justify-start overflow-hidden rounded-tr-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
+                <div className="flex flex-col items-center justify-start overflow-hidden md:rounded-tr-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
                 <Image
                     alt="feature1"
                     src={feature2}
-                    className="w-[90%]  "
+                    className="w-[90%]"
                   />
                   <div className="flex flex-col items-center justify-start gap-4 px-4">
-                    <div className="justify-center self-stretch text-center font-['Inter'] text-2xl font-medium leading-tight text-neutral-700">
+                    <div className="justify-center self-stretch text-center font-['Inter'] md:text-2xl text-sm font-medium leading-tight text-neutral-700">
                       Customise AI Assistants for Your Business Needs
                     </div>
-                    <div className="justify-center text-center font-['Inter'] text-sm font-normal leading-tight text-gray-500">
+                    <div className="justify-center text-center font-['Inter'] md:text-sm text-[10px] font-normal leading-tight text-gray-500">
                       Transkript AI allows you to create multiple AI-powered
                       voice assistants tailored to different business needs.
                       Each assistant can be fully customised, with options to
@@ -73,10 +73,10 @@ const Features = () => {
                   className="relative w-full max-w-sm rounded-lg "
                 />
                 <div className="flex flex-col items-start justify-center gap-4">
-                  <div className="justify-center text-center font-['Inter'] text-2xl font-medium leading-tight text-neutral-700">
+                  <div className="justify-center text-center font-['Inter'] md:text-2xl text-sm font-medium leading-tight text-neutral-700">
                     AI-Powered Transcription, Summaries & Analysis
                   </div>
-                  <div className="justify-center font-['Inter'] text-sm font-normal leading-tight text-gray-500">
+                  <div className="justify-center font-['Inter'] md:text-sm text-[10px] font-normal leading-tight text-gray-500">
                     Transkript AI enables seamless audio and video uploads for
                     fast, accurate transcriptions. Using advanced AI models, it
                     generates detailed summaries and insightful analyses,
@@ -89,17 +89,17 @@ const Features = () => {
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <div className="flex flex-col items-center justify-start overflow-hidden rounded-bl-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
+                <div className="flex flex-col items-center justify-start overflow-hidden md:rounded-bl-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
                 <Image
                     alt="feature1"
                     src={feature4}
                     className="w-[90%]  "
                   />
                   <div className="flex flex-col items-center justify-start gap-4 px-4">
-                    <div className="justify-center self-stretch text-center font-['Inter'] text-2xl font-medium leading-tight text-neutral-700">
+                    <div className="justify-center self-stretch text-center font-['Inter'] md:text-2xl text-sm font-medium leading-tight text-neutral-700">
                       Seamless Phone Number Integration
                     </div>
-                    <div className="justify-center text-center font-['Inter'] text-sm font-normal leading-tight text-gray-500">
+                    <div className="justify-center text-center font-['Inter'] md:text-sm text-[10px] font-normal leading-tight text-gray-500">
                       Transkript AI allows you to add phone numbers from Twilio
                       or Vonage, enabling direct voice interactions with your AI
                       assistants. Easily connect numbers to your assistants,
@@ -111,17 +111,17 @@ const Features = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-center justify-start overflow-hidden rounded-br-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
+                <div className="flex flex-col items-center justify-start overflow-hidden md:rounded-br-[48px] bg-gray-100 pb-6 pt-8 outline outline-1 outline-gray-200">
                 <Image
                     alt="feature1"
                     src={feature5}
                     className="w-[90%]  "
                   />
                   <div className="flex flex-col items-center justify-start gap-4 px-4">
-                    <div className="justify-center self-stretch text-center font-['Inter'] text-2xl font-medium leading-tight text-neutral-700">
+                    <div className="justify-center self-stretch text-center font-['Inter'] md:text-2xl text-sm font-medium leading-tight text-neutral-700">
                       Enhanced Knowledge Base for Context-Aware Assistants
                     </div>
-                    <div className="justify-center text-center font-['Inter'] text-sm font-normal leading-tight text-gray-500">
+                    <div className="justify-center text-center font-['Inter'] md:text-sm text-[10px] font-normal leading-tight text-gray-500">
                       This feature improves contextual understanding, allowing
                       your AI to provide more accurate and relevant responses.
                       Whether it&apos;s FAQs, company policies, or technical
