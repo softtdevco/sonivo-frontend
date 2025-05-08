@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { feature1, feature2, feature3, feature4, feature5 } from "@/assets/images";
 import { FaArrowRight, FaPhone } from "react-icons/fa6";
-
+import Link from "next/link";
 const Features = () => {
   return (
     <>
@@ -133,20 +133,20 @@ const Features = () => {
               </div>
             </div>
             <div className="mt-12 flex items-center justify-center gap-4">
-              <div className="bg-black-900 flex w-40 items-center justify-between rounded-xl px-5 py-3">
+              <Link href="/login" className="bg-black-900 flex w-40 items-center justify-between rounded-xl px-5 py-3">
                 <div className="justify-center text-center font-['Inter'] text-base font-medium leading-none text-white">
                   Try Now
                 </div>
                 <FaArrowRight className="text-white h-5 w-5"/>
                 
-              </div>
-              <div className="relative flex items-center justify-start gap-1.5 rounded-xl px-5 py-3">
+              </Link>
+              <Link href="/contact" className="relative flex items-center justify-start gap-1.5 rounded-xl px-5 py-3">
                 <FaPhone className="text-black h-5 w-5"/>
                 <div className="text-black justify-center text-center font-['Inter'] text-base font-medium leading-none">
-                  Talk to Sales
+                  Contact Transkript
                 </div>
                 <div className="absolute left-0 top-0 h-11 w-40 rounded-xl border border-neutral-200" />
-              </div>
+              </Link>
             </div>
           </div>
         </div>

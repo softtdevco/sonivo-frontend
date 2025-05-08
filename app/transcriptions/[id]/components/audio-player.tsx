@@ -68,17 +68,17 @@ const AudioPlayer = ({ audioUrl, onTimeUpdate }: AudioPlayerProps) => {
   }, [currentTime, onTimeUpdate]);
 
   return (
-    <div className="mt-8 border-b pb-4">
+    <div className="mt-4 md:mt-8 border-b pb-4">
       <div 
         ref={containerRef} 
-        className="w-full h-[100px] rounded-lg p-4 overflow-hidden"
+        className="w-full h-[80px] md:h-[100px] rounded-lg p-2 md:p-4 overflow-hidden"
       />
       
-      <div className="flex items-center justify-center gap-6 mt-4">
+      <div className="flex flex-wrap items-center justify-center gap-2 md:gap-6 mt-4">
         <select 
           value={playbackRate}
           onChange={(e) => handlePlaybackRate(Number(e.target.value))}
-          className="p-2 rounded-md border border-[#dedede] text-[#1c2833] outline-none"
+          className="p-1 md:p-2 rounded-md border border-[#dedede] text-[#1c2833] outline-none text-xs md:text-sm"
         >
           <option value={0.5}>0.5x</option>
           <option value={1}>1x</option>
@@ -88,37 +88,37 @@ const AudioPlayer = ({ audioUrl, onTimeUpdate }: AudioPlayerProps) => {
 
         <button 
           onClick={() => wavesurfer?.skip(-10)}
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          className="p-1 md:p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
-          <FaBackward className="size-5 text-[#1c2833]" />
+          <FaBackward className="size-4 md:size-5 text-[#1c2833]" />
         </button>
 
         <button 
           onClick={onPlayPause}
-          className="p-3 rounded-full bg-[#ef5a3c] hover:bg-[#ef5a3c]/80 transition-colors"
+          className="p-2 md:p-3 rounded-full bg-[#ef5a3c] hover:bg-[#ef5a3c]/80 transition-colors"
         >
           {isPlaying ? (
-            <FaPause className="size-5 text-white" />
+            <FaPause className="size-4 md:size-5 text-white" />
           ) : (
-            <FaPlay className="size-5 text-white" />
+            <FaPlay className="size-4 md:size-5 text-white" />
           )}
         </button>
 
         <button 
           onClick={() => wavesurfer?.skip(10)}
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          className="p-1 md:p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
-          <FaForward className="size-5 text-[#1c2833]" />
+          <FaForward className="size-4 md:size-5 text-[#1c2833]" />
         </button>
 
         <button 
           onClick={handleMute}
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          className="p-1 md:p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
           {isMuted ? (
-            <IoMdVolumeOff className="size-5 text-[#1c2833]" />
+            <IoMdVolumeOff className="size-4 md:size-5 text-[#1c2833]" />
           ) : (
-            <IoMdVolumeHigh className="size-5 text-[#1c2833]" />
+            <IoMdVolumeHigh className="size-4 md:size-5 text-[#1c2833]" />
           )}
         </button>
       </div>

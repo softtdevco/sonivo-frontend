@@ -23,9 +23,9 @@ import {
   LayoutDashboard,
   NotepadText,
   Phone,
-  PhoneCall,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Credits from "@/app/settings/components/Credits";
 
 const data = {
   navMain: [
@@ -44,11 +44,6 @@ const data = {
       title: "Menu",
       url: "#",
       items: [
-        {
-          title: "Live Calls",
-          url: "/live-calls",
-          icon: <PhoneCall className="size-5" />,
-        },
         {
           title: "Transcriptions",
           url: "/transcriptions",
@@ -81,8 +76,8 @@ const data = {
           icon: <CircleUser className="size-5" />,
         },
         {
-          title: "Support",
-          url: "/support",
+          title: "Contact Transkript",
+          url: "/contact",
           icon: <Headphones className="size-5" />,
         },
       ],
@@ -98,6 +93,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader className="bg-white">
         <Image src={Logo} alt="logo" width={100} height={100} />
       </SidebarHeader>
+
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
@@ -127,6 +123,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <div className="px-2 py-4">
+        <Credits />
+      </div>
       <SidebarRail />
     </Sidebar>
   );

@@ -84,7 +84,7 @@ const Page = () => {
         </>
       }
     >
-      <div className="bg-white px-7 py-6">
+      <div className="bg-white px-3 md:px-7 py-4 md:py-6">
         {transcription?.transccriptionMedia?.publicUrl && (
           <AudioPlayer
             audioUrl={transcription.transccriptionMedia.publicUrl}

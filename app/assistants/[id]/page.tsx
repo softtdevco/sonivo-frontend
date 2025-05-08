@@ -20,7 +20,6 @@ import { FaPen, FaCheck } from "react-icons/fa6";
 import {
   Phone,
   MessageSquare,
-  PhoneCall,
   Copy,
   Trash2,
   Sparkles,
@@ -218,7 +217,6 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="inline-flex items-center justify-center gap-3">
               <Input
                 className="text-[21.30px] font-normal leading-relaxed text-[#1c2833] outline-0 focus:outline-0"
-                value={name}
                 onChange={handleNameChange}
                 type="text"
                 defaultValue={assistant.name!}

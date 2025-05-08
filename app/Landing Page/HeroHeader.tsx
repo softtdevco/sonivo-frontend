@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
@@ -52,18 +53,18 @@ const HeroHeader = () => {
 
           {/* Buttons */}
           <div className="relative z-10 mt-5 flex items-center justify-center gap-4">
-            <div className="inline-flex w-40 items-center justify-between rounded-xl bg-black-900 px-5 py-3">
+            <Link href="/login" className="inline-flex w-40 items-center justify-between rounded-xl bg-black-900 px-5 py-3">
               <div className="justify-center text-center font-['Inter'] text-base font-medium leading-none text-white">
                 Try Now
               </div>
               <div className="relative h-5 w-5 overflow-hidden">
                 <FaArrowRight className="text-white" />
               </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border-2 border-black-900 px-5 py-2 font-medium">
+            </Link>
+            <Link href="/contact" className="flex items-center gap-3 rounded-xl border-2 border-black-900 px-5 py-2 font-medium">
               <FaPhoneFlip />
-              Talk to Sales
-            </div>
+              Contact Transkript
+            </Link>
           </div>
         </div>
       </div>

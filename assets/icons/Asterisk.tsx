@@ -9,7 +9,7 @@ const Asterisk = () => {
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M0 1H484" stroke="#E9EAF4" stroke-width="0.5" />
+    <path d="M0 1H484" stroke="#E9EAF4" strokeWidth="0.5" />
   </svg>
   )
 }

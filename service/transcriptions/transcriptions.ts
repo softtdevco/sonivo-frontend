@@ -30,13 +30,12 @@ export function useGetTranscription(id: string, options?: Omit<UseQueryOptions<T
   });
 }
 
-export function useDeleteTranscription(options?: { onSuccess?: () => void }) {
+export function useDeleteTranscription() {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (id: string) => deleteTranscription(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['transcriptions'] });
-            options?.onSuccess?.();
         }
     });
 }

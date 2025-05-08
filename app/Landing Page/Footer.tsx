@@ -14,7 +14,7 @@ const Footer = () => {
                             <Link href="/" className="text-neutral-100 text-sm font-normal font-['Outfit'] leading-snug hover:text-white transition-colors hover:underline">Welcome to Transkript</Link>
                             <Link href="/integrations" className="text-neutral-100 text-sm font-normal font-['Outfit'] leading-snug hover:text-white transition-colors hover:underline">SIP & Call Dialer Integration</Link>
                             <Link href="/pricing" className="text-neutral-100 text-sm font-normal font-['Outfit'] leading-snug hover:text-white transition-colors hover:underline">Choose Your Plan</Link>
-                            <Link href="/support" className="text-neutral-100 text-sm font-normal font-['Outfit'] leading-snug hover:text-white transition-colors hover:underline">We're Here to Help</Link>
+                            <Link href="/contact" className="text-neutral-100 text-sm font-normal font-['Outfit'] leading-snug hover:text-white transition-colors hover:underline">We&apos;re Here to Help</Link>
                         </div>
                         <div className="flex flex-col gap-4">
                             <div className="text-white text-lg font-semibold font-['Outfit'] leading-relaxed">Useful links</div>

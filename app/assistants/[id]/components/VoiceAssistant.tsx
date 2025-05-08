@@ -98,6 +98,8 @@ export default function VoiceAssistant({ assistance }: any) {
 
   async function init() {
     setIsLoading(true);
+    console.log("hi");
+    
     try {
       // 1. Retrieve the ephemeral token for authenticating the session with OpenAI.
       const EPHEMERAL_KEY = await getToken();

@@ -37,8 +37,8 @@ const HeroSection = () => {
           </Marquee>
         </div>
 
-        <div className="relative z-10 mt-20 flex md:flex-col flex-row items-center justify-center gap-4">
-            <Link href="/try-now" className="inline-flex w-40 items-center justify-between rounded-xl bg-black-900 px-5 py-3 hover:bg-gray-800 transition-colors group">
+        <div className="relative z-10 mt-20 flex  flex-row items-center justify-center gap-4">
+            <Link href="/login" className="inline-flex w-40 items-center justify-between rounded-xl bg-black-900 px-5 py-3 hover:bg-gray-800 transition-colors group cursor-pointer">
               <div className="justify-center text-center font-['Inter'] text-base font-medium leading-none text-white">
                 Try Now
               </div>
@@ -46,9 +46,9 @@ const HeroSection = () => {
                 <FaArrowRight className="text-white group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
-            <Link href="/contact-sales" className="flex items-center gap-3 rounded-xl border-2 border-gray-600 px-5 py-2 font-medium hover:bg-gray-200 transition-colors">
+            <Link href="/contact" className="flex items-center gap-3 rounded-xl border-2 border-gray-600 px-5 py-2 font-medium hover:bg-gray-200 transition-colors cursor-pointer">
               <FaPhoneFlip />
-              Talk to Sales
+              Contact Transkript
             </Link>
           </div>
       </div>

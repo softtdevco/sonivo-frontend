@@ -1,7 +1,7 @@
 import api from "../api";
 import { ErrorResponse } from "../auth/authServices";
 
-export const createAssistant = async (data: { name: string }) => {
+export const createAssistant = async (data: { name: string; assistantType: string; prompt: string }) => {
   try {
     const response = await api.post("/assists", data);
     return response.data;

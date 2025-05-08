@@ -17,4 +17,4 @@ export const getToken = async () => {
 
   const data = await r.json();
   return data.client_secret.value;
-};
+}; 

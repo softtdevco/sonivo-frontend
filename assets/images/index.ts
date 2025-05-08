@@ -14,5 +14,6 @@ import feature2 from "./feature2.svg"
 import feature3 from "./feature3.svg"
 import feature4 from "./feature4.svg"
 import feature5 from "./feature5.svg"
+import alex from "./alex.jpg"
 
-export { Logo, HeroImage, HeroImage2, Autodesk, Cisco, Feica, Frog, Google, Intel, Samsung, Visa, feature1, feature2, feature3, feature4, feature5 };
+export { Logo, HeroImage, HeroImage2, Autodesk, Cisco, Feica, Frog, Google, Intel, Samsung, Visa, feature1, feature2, feature3, feature4, feature5, alex };

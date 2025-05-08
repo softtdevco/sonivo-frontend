@@ -14,10 +14,18 @@ const LandingPage = () => {
         <Navbar />
         <HeroHeader />
         <HeroSection />
-        <Features />
-        <Testimonial />
-        <Pricing />
-        <FAQ />
+        <div id="features">
+          <Features />
+        </div>
+        <div id="testimonials">
+          <Testimonial />
+        </div>
+        <div id="pricing">
+          <Pricing />
+        </div>
+        <div id="faq">
+          <FAQ />
+        </div>
         <Footer />
     </>
   )
