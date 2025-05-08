@@ -64,17 +64,17 @@ const ContentTabs = ({ transcription, currentTime }: ContentTabsProps) => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="h-10 flex gap-8">
+    <div className="space-y-6 overflow-x-hidden">
+      <div className="flex gap-4 md:gap-8 overflow-x-auto pb-2">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center whitespace-nowrap"
           >
             <span
               className={cn(
-                "text-base font-medium",
+                "text-sm md:text-base font-medium",
                 activeTab === tab.id ? "text-[#ef5a3c]" : "text-[#4d4d4d]"
               )}
             >

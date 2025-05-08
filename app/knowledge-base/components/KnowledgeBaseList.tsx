@@ -142,21 +142,6 @@ const KnowledgeBaseList: React.FC<KnowledgeBaseListProps> = ({ files }) => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <a
-                        href={file.file.publicUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium text-[#150a30] underline hover:text-gray-900"
-                      >
-                        View
-                      </a>
-                      <a
-                        href={file.file.publicUrl}
-                        download={file.fileName}
-                        className="text-sm font-medium text-[#150a30] underline hover:text-gray-900"
-                      >
-                        Download
-                      </a>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button className="text-[#000] hover:text-red-500">

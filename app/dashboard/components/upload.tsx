@@ -55,21 +55,21 @@ const Upload = () => {
     >
       {({ open }) => (
         <div 
-          className="inline-flex h-[249px] w-full items-center justify-center rounded-2xl border-2 border-[#bbbbbb] bg-neutral-400/5 border-dashed cursor-pointer"
+          className="inline-flex h-[249px] w-full items-center justify-center rounded-2xl border-2 border-[#bbbbbb] bg-neutral-400/5 border-dashed cursor-pointer p-3 md:p-0"
           onClick={() => open()}
         >
-          <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col items-center justify-center md:gap-6 gap-8">
             <FaFileUpload className="relative h-10 w-10 overflow-hidden text-black-700" />
             <div className="flex h-[46px] flex-col items-start justify-start gap-2 self-stretch">
-              <div className="self-stretch text-center text-base font-medium text-[#4d4d4d]">
+              <div className="self-stretch text-center md:text-base text-sm font-medium text-[#4d4d4d]">
                 {uploading ? 'Uploading...' : 'Click or Drag & Drop to upload file'}
               </div>
-              <div className="self-stretch text-base font-medium text-[#4d4d4d]/50">
+              <div className="self-stretch md:text-base text-sm font-medium text-[#4d4d4d]/50 text-center">
                 Supported file types are .Wav, .Mp3, .MOV, .Mp4
               </div>
             </div>
             <div className="rounded-xl border border-[#dedede] bg-white px-5 py-3">
-              <div className="text-center text-base font-medium leading-[14.40px] text-[#131313]">
+              <div className="text-center md:text-base text-sm font-medium leading-[14.40px] text-[#131313]">
                 Upload File
               </div>
             </div>

@@ -37,8 +37,8 @@ const Page = () => {
         <EmptyState />
       ) : (
         <>
-          <CreateAssistant />
-          <Lists assistants={assistants} />
+           <CreateAssistant />
+        <Lists assistants={assistants} />
         </>
       )}
     </DashboardWrapper>

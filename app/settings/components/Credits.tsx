@@ -19,33 +19,17 @@ const Credits = () => {
   };
 
   return (
-    <div className="-mt-[11px] border-t-2 border-[#dadada] pt-6">
-      <p className="text-base font-normal text-[#555e67]">Available Credits</p>
-      <div className="mt-6 inline-flex h-[99px] items-center justify-start gap-6 rounded-xl border border-[#e8e6ea] bg-white p-4 w-full">
-        <div className="inline-flex h-[67px] justify-between w-full">
-          <div className="inline-flex h-[67px] flex-col justify-start gap-3">
-            <div className="inline-flex h-8 items-center gap-2">
-              <div className="text-[32px] font-bold leading-loose text-[#272728]">
-                {user?.credit?.credit}
-              </div>
-              <div className="text-base font-normal leading-tight text-[#555e67]">
-                Credits
-              </div>
-            </div>
-            <div className="text-sm font-normal leading-[23px] text-[#555e67]">
-              Approx. 23 mins of transcriptions, 32 mins of calls, 21 mins of
-              live calls left
-            </div>
-          </div>
-        </div>
-        <div 
-          className="inline-flex h-[50px] w-[205px] items-center justify-center gap-1.5 rounded-xl border bg-neutral-400/10 px-5 py-3 text-center text-base font-medium leading-[14.40px] text-[#131313] cursor-pointer" 
-          onClick={() => setIsOpen(true)}
-        >
-          {isPending ? 'Processing...' : 'Top up'}
-        </div>
-      </div>
-
+    <div className="rounded-xl bg-white border border-[#e8e6ea] p-4 flex flex-col items-center w-full max-w-xs mx-auto shadow-sm">
+      <div className="text-2xl font-bold text-[#272728] mb-2">{user?.credit?.credit ?? 0} credits</div>
+      <div className="w-full h-4 bg-gray-100 rounded mb-1" />
+      <div className="w-full h-4 bg-gray-100 rounded mb-4" />
+      <button
+        className="w-full bg-[#131313] text-white rounded-lg py-2 font-semibold text-base hover:bg-[#272728] transition mb-1"
+        onClick={() => setIsOpen(true)}
+        disabled={isPending}
+      >
+        {isPending ? 'Processing...' : 'TOP-UP'}
+      </button>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader>

@@ -8,7 +8,6 @@ import {
   LockKeyhole,
   Mail,
   MoveRight,
-  PhoneIncoming,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
@@ -92,8 +91,8 @@ const Register = () => {
 
   return (
     <>
-      <div className="mb-10">
-        <h1 className="text-2xl font-semibold leading-tight text-[#272728]">
+      <div className="md:mb-10 mb-6">
+        <h1 className="md:text-2xl text-xl font-semibold leading-tight text-[#272728]">
           Start your free trial
         </h1>
         <p className="mt-2 text-base font-normal leading-tight text-[#575758]">
@@ -125,7 +124,7 @@ const Register = () => {
             )}
           />
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="phone"
             render={({ field }) => (
@@ -145,7 +144,7 @@ const Register = () => {
                 </div>
               </FormFieldWrapper>
             )}
-          />
+          /> */}
 
           <FormField
             control={form.control}

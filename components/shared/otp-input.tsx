@@ -97,8 +97,8 @@ export function OTPInput({
 
   return (
     <>
-      <div className="mb-10">
-        <h1 className="text-2xl font-semibold leading-tight text-[#272728]">
+      <div className="md:mb-10 mb-6">
+        <h1 className="md:text-2xl text-xl font-semibold leading-tight text-[#272728]">
           {title}
         </h1>
         <p className="mt-2 text-base font-normal leading-tight text-[#575758]">

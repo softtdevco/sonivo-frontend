@@ -5,7 +5,7 @@ import { ErrorResponse } from "../auth/authServices";
 export function useCreateAssistant() {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (data: {name: string}) => createAssistant(data),
+        mutationFn: (data: {name: string, assistantType: string, prompt: string}) => createAssistant(data),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["assistants"]});
         },

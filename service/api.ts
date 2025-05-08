@@ -1,14 +1,11 @@
 import axios from "axios";
-const baseURL = "https://sonivo-backend-production.up.railway.app/api/v1";
-
-
-
+const baseURL = "https://transkript.up.railway.app/api/v1"
 
 const api = axios.create({
   baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
-  }
+  },
 });
 
 api.interceptors.request.use((config) => {

@@ -22,28 +22,29 @@ const Transcript = ({ transcription, currentTime = 0 }: TranscriptProps) => {
   };
 
   return (
-    <div className="">
-      <div className=" space-y-4">
+    <div className="overflow-x-hidden">
+      <div className="space-y-3 md:space-y-4">
         {segments.map((segment) => (
           <div
             key={segment.id}
-            className={`flex gap-4 rounded-md p-2 transition-colors ${
+            className={`flex flex-col md:flex-row gap-1 md:gap-4 rounded-md p-2 transition-colors ${
               currentTime >= segment.start && currentTime <= segment.end
                 ? "bg-[#ef5a3c]/10"
                 : ""
             }`}
           >
-            <span className="min-w-[80px] text-[13px] text-gray-500">
-              {formatTime(segment.start)}
-            </span>
-            <span className="text-[13px] font-bold text-gray-500">
-              {getSpeaker(segment.id)} :
-            </span>
-            <p className="text-[13px] text-gray-500">{segment.text}</p>
+            <div className="flex items-center gap-2 mb-1 md:mb-0">
+              <span className="min-w-[60px] md:min-w-[80px] text-[12px] md:text-[13px] text-gray-500">
+                {formatTime(segment.start)}
+              </span>
+              <span className="text-[12px] md:text-[13px] font-bold text-gray-500">
+                {getSpeaker(segment.id)}:
+              </span>
+            </div>
+            <p className="text-[12px] md:text-[13px] text-gray-500 pl-0 md:pl-2">{segment.text}</p>
           </div>
         ))}
       </div>
-    
     </div>
   );
 };
